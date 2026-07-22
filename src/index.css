@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #0f1117;
+  --color-surface: #1a1d2e;
+  --color-surface2: #232638;
+  --color-border: #2e3250;
+  --color-accent: #4f8ef7;
+  --color-normal: #22c55e;
+  --color-warning: #f59e0b;
+  --color-alarm: #ef4444;
+  --color-comms: #6b7280;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: #e2e8f0;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  font-size: 14px;
+  overflow: hidden;
+}
+
+#root {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.scada-bg { background: var(--color-bg); }
+.scada-surface { background: var(--color-surface); }
+.scada-surface2 { background: var(--color-surface2); }
+.scada-border { border-color: var(--color-border); }
+
+.status-normal { color: #22c55e; }
+.status-warning { color: #f59e0b; }
+.status-alarm { color: #ef4444; }
+.status-comms { color: #6b7280; }
+
+.badge-normal { background: #14532d; color: #22c55e; }
+.badge-warning { background: #451a03; color: #f59e0b; }
+.badge-alarm { background: #450a0a; color: #ef4444; }
+.badge-comms { background: #1f2937; color: #6b7280; }
+
+.leaflet-container { background: #1a1d2e !important; }
+.leaflet-tile { filter: brightness(0.7) saturate(0.6); }
+
+/* Compact permanent data labels shown when a map filter is active */
+.lvd-perm-label {
+  background: rgba(8, 14, 28, 0.94) !important;
+  border: 1px solid rgba(79, 142, 247, 0.4) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7) !important;
+  color: #dbeafe !important;
+  font-size: 11px !important;
+  line-height: 1.4 !important;
+  padding: 3px 7px !important;
+  white-space: nowrap;
+}
+.lvd-perm-label::before { display: none !important; }
+
+/* Dark popup for map fittings */
+.lvd-popup .leaflet-popup-content-wrapper {
+  background: rgba(10, 16, 30, 0.97);
+  border: 1px solid rgba(79, 142, 247, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
+  color: #e2e8f0;
+}
+.lvd-popup .leaflet-popup-tip { background: rgba(10, 16, 30, 0.97); }
+.lvd-popup .leaflet-popup-content { margin: 10px 12px; font-size: 12px; }
+.lvd-popup .leaflet-popup-close-button { color: #6b7280 !important; }
+
+/* Diamond fitting markers */
+.lvd-fitting-icon { background: transparent; border: none; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #1a1d2e; }
+::-webkit-scrollbar-thumb { background: #2e3250; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #4f8ef7; }
+
+@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+.alarm-blink { animation: blink 1s step-end infinite; }
+
+.disabled-widget {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

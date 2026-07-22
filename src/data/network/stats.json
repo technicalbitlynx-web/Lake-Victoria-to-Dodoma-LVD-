@@ -1,0 +1,26 @@
+{
+  "source": "MBALIKA2068 EPANET model (WGS84 / UTM 36S shapefile export)",
+  "junctions": 34431,
+  "demandJunctions": 11,
+  "keyJunctionsShown": 11,
+  "pipes": 34404,
+  "pipeKm": 1092.5,
+  "pumps": 23,
+  "valves": 38,
+  "tanks": 12,
+  "reservoirs": 8,
+  "totalBaseDemand_lps": 15206,
+  "diameterHistogram": {
+    "≥1000": 28984,
+    "500–999": 5397,
+    "250–499": 23
+  },
+  "elevRange": [
+    829,
+    1786
+  ],
+  "valveTypes": {
+    "FCV": 34,
+    "PRV": 4
+  }
+}

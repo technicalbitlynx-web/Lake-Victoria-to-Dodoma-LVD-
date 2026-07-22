@@ -1,0 +1,1 @@
+[{"id":"trunk","label":"Trunk main ≥ DN1000","min":1000,"max":1000000000,"color":"#4f8ef7","weight":3,"count":28984,"km":943.6},{"id":"primary","label":"Primary DN500–999","min":500,"max":999.99,"color":"#38bdf8","weight":2,"count":5397,"km":146.5},{"id":"secondary","label":"Secondary DN250–499","min":250,"max":499.99,"color":"#2dd4bf","weight":1.4,"count":23,"km":2.4}]

@@ -1,0 +1,90 @@
+{
+  "INTAKE": [
+    { "suffix": "SCR-DP-001", "measurement": "pressure", "description": "Coarse screen differential pressure", "unit": "kPa", "range": [0, 50], "alarm_low": 0, "alarm_high": 30, "alarm_high_high": 45, "signal": "4-20mA" },
+    { "suffix": "LT-001", "measurement": "level", "description": "Collection channel level", "unit": "m", "range": [0, 5], "alarm_low_low": 0.3, "alarm_low": 0.6, "alarm_high": 4.5, "alarm_high_high": 4.8, "signal": "4-20mA" },
+    { "suffix": "LT-002", "measurement": "level", "description": "Sump well level", "unit": "m", "range": [0, 8], "alarm_low_low": 0.5, "alarm_low": 1.0, "alarm_high": 7.0, "alarm_high_high": 7.5, "signal": "4-20mA" },
+    { "suffix": "TT-001", "measurement": "turbidity", "description": "Raw water turbidity", "unit": "NTU", "range": [0, 1000], "alarm_high": 200, "alarm_high_high": 500, "signal": "4-20mA" },
+    { "suffix": "pHT-001", "measurement": "ph", "description": "Raw water pH", "unit": "pH", "range": [4, 10], "alarm_low_low": 5.5, "alarm_low": 6.0, "alarm_high": 8.5, "alarm_high_high": 9.5, "signal": "4-20mA" },
+    { "suffix": "CT-001", "measurement": "conductivity", "description": "Raw water conductivity", "unit": "μS/cm", "range": [0, 2000], "alarm_high": 1000, "alarm_high_high": 1500, "signal": "4-20mA" },
+    { "suffix": "TEMP-001", "measurement": "temperature", "description": "Raw water temperature", "unit": "°C", "range": [10, 40], "alarm_high": 35, "signal": "4-20mA" },
+    { "suffix": "P{n}-RUN", "measurement": "status", "description": "Pump {n} run status", "unit": "", "range": [0, 1], "signal": "digital", "per_pump": true },
+    { "suffix": "P{n}-FLT", "measurement": "status", "description": "Pump {n} fault", "unit": "", "range": [0, 1], "signal": "digital", "per_pump": true },
+    { "suffix": "P{n}-CURR", "measurement": "current", "description": "Pump {n} motor current", "unit": "A", "range": [0, 500], "alarm_high": 450, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-KWH", "measurement": "power", "description": "Pump {n} energy (active)", "unit": "kWh", "range": [0, 99999], "signal": "modbus", "per_pump": true },
+    { "suffix": "P{n}-BTEMP-DE", "measurement": "temperature", "description": "Pump {n} drive-end bearing temp", "unit": "°C", "range": [0, 120], "alarm_high": 85, "alarm_high_high": 100, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-BTEMP-NDE", "measurement": "temperature", "description": "Pump {n} non-drive-end bearing temp", "unit": "°C", "range": [0, 120], "alarm_high": 85, "alarm_high_high": 100, "signal": "4-20mA", "per_pump": true }
+  ],
+  "WTP": [
+    { "suffix": "FT-001", "measurement": "flow", "description": "Raw water inlet flow", "unit": "m³/h", "range": [0, 3500], "alarm_low": 200, "alarm_high": 3200, "signal": "modbus" },
+    { "suffix": "DT-001", "measurement": "flow", "description": "Coagulant dosing rate", "unit": "L/h", "range": [0, 500], "signal": "4-20mA" },
+    { "suffix": "TT-001", "measurement": "turbidity", "description": "Settled water turbidity", "unit": "NTU", "range": [0, 50], "alarm_high": 10, "alarm_high_high": 20, "signal": "4-20mA" },
+    { "suffix": "LT-SLUDGE", "measurement": "level", "description": "Sludge blanket level", "unit": "m", "range": [0, 5], "alarm_high": 3.5, "alarm_high_high": 4.5, "signal": "4-20mA" },
+    { "suffix": "FILTER{n}-DP", "measurement": "pressure", "description": "Filter {n} differential pressure", "unit": "kPa", "range": [0, 100], "alarm_high": 60, "alarm_high_high": 80, "signal": "4-20mA", "per_filter": true },
+    { "suffix": "FILTER{n}-TT", "measurement": "turbidity", "description": "Filter {n} filtered water turbidity", "unit": "NTU", "range": [0, 5], "alarm_high": 1, "signal": "4-20mA", "per_filter": true },
+    { "suffix": "BW-STATE", "measurement": "status", "description": "Backwash sequence state", "unit": "", "range": [0, 5], "signal": "digital" },
+    { "suffix": "CL-DOSE", "measurement": "flow", "description": "Chlorine dosing rate", "unit": "L/h", "range": [0, 100], "signal": "4-20mA" },
+    { "suffix": "CL-RES", "measurement": "chlorine", "description": "Treated water residual chlorine", "unit": "mg/L", "range": [0, 5], "alarm_low": 0.2, "alarm_high": 1.5, "alarm_high_high": 2.0, "signal": "4-20mA" },
+    { "suffix": "pHT-OUT", "measurement": "ph", "description": "Treated water pH", "unit": "pH", "range": [4, 10], "alarm_low": 6.5, "alarm_high": 8.5, "signal": "4-20mA" },
+    { "suffix": "TT-OUT", "measurement": "turbidity", "description": "Treated water turbidity", "unit": "NTU", "range": [0, 10], "alarm_high": 1, "alarm_high_high": 4, "signal": "4-20mA" }
+  ],
+  "IBPS": [
+    { "suffix": "FT-001", "measurement": "flow", "description": "Delivery flow (instantaneous)", "unit": "m³/h", "range": [0, 3500], "alarm_low": 200, "alarm_high": 3200, "signal": "modbus" },
+    { "suffix": "FT-TOT", "measurement": "flow", "description": "Delivery flow (totalised)", "unit": "m³", "range": [0, 99999999], "signal": "modbus" },
+    { "suffix": "PT-SUCT", "measurement": "pressure", "description": "Suction manifold pressure", "unit": "bar", "range": [-1, 10], "alarm_low_low": -0.5, "alarm_low": 0, "signal": "4-20mA" },
+    { "suffix": "PT-DELY", "measurement": "pressure", "description": "Delivery manifold pressure", "unit": "bar", "range": [0, 30], "alarm_low": 2, "alarm_high": 28, "signal": "4-20mA" },
+    { "suffix": "P{n}-RUN", "measurement": "status", "description": "Pump {n} run status", "unit": "", "range": [0, 1], "signal": "digital", "per_pump": true },
+    { "suffix": "P{n}-AVAIL", "measurement": "status", "description": "Pump {n} availability", "unit": "", "range": [0, 1], "signal": "digital", "per_pump": true },
+    { "suffix": "P{n}-FLT", "measurement": "status", "description": "Pump {n} fault", "unit": "", "range": [0, 1], "signal": "digital", "per_pump": true },
+    { "suffix": "P{n}-CURR", "measurement": "current", "description": "Pump {n} motor current", "unit": "A", "range": [0, 500], "alarm_high": 450, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-KW", "measurement": "power", "description": "Pump {n} active power", "unit": "kW", "range": [0, 2000], "signal": "modbus", "per_pump": true },
+    { "suffix": "P{n}-KVAR", "measurement": "power", "description": "Pump {n} reactive power", "unit": "kVAr", "range": [0, 2000], "signal": "modbus", "per_pump": true },
+    { "suffix": "P{n}-KVA", "measurement": "power", "description": "Pump {n} apparent power", "unit": "kVA", "range": [0, 2000], "signal": "modbus", "per_pump": true },
+    { "suffix": "P{n}-BTEMP-DE", "measurement": "temperature", "description": "Pump {n} drive-end bearing temp", "unit": "°C", "range": [0, 120], "alarm_high": 85, "alarm_high_high": 100, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-BTEMP-NDE", "measurement": "temperature", "description": "Pump {n} non-drive-end bearing temp", "unit": "°C", "range": [0, 120], "alarm_high": 85, "alarm_high_high": 100, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-VIB", "measurement": "vibration", "description": "Pump {n} vibration (mm/s)", "unit": "mm/s", "range": [0, 20], "alarm_high": 7, "alarm_high_high": 11, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-VFD-SPEED", "measurement": "speed", "description": "Pump {n} VFD speed", "unit": "%", "range": [0, 100], "signal": "modbus", "per_pump": true },
+    { "suffix": "P{n}-VFD-FREQ", "measurement": "frequency", "description": "Pump {n} VFD frequency", "unit": "Hz", "range": [0, 60], "signal": "modbus", "per_pump": true },
+    { "suffix": "P{n}-RUNTIME", "measurement": "time", "description": "Pump {n} runtime hours", "unit": "h", "range": [0, 99999], "signal": "modbus", "per_pump": true }
+  ],
+  "RESERVOIR": [
+    { "suffix": "LT-001", "measurement": "level", "description": "Reservoir level", "unit": "m", "range": [0, 10], "alarm_low_low": 0.5, "alarm_low": 1.0, "alarm_high": 9.0, "alarm_high_high": 9.8, "signal": "4-20mA" },
+    { "suffix": "FT-IN", "measurement": "flow", "description": "Inlet flow", "unit": "m³/h", "range": [0, 3500], "signal": "modbus" },
+    { "suffix": "FT-OUT", "measurement": "flow", "description": "Outlet flow", "unit": "m³/h", "range": [0, 3500], "signal": "modbus" },
+    { "suffix": "PT-IN", "measurement": "pressure", "description": "Inlet manifold pressure", "unit": "bar", "range": [0, 20], "signal": "4-20mA" },
+    { "suffix": "PT-OUT", "measurement": "pressure", "description": "Outlet manifold pressure", "unit": "bar", "range": [0, 20], "signal": "4-20mA" },
+    { "suffix": "CL-RES", "measurement": "chlorine", "description": "Residual chlorine", "unit": "mg/L", "range": [0, 5], "alarm_low": 0.2, "alarm_high": 1.0, "signal": "4-20mA" },
+    { "suffix": "TT-001", "measurement": "turbidity", "description": "Turbidity", "unit": "NTU", "range": [0, 10], "alarm_high": 1, "alarm_high_high": 4, "signal": "4-20mA" },
+    { "suffix": "VLV-OVF", "measurement": "valve_position", "description": "Overflow valve status", "unit": "", "range": [0, 1], "signal": "digital" },
+    { "suffix": "VLV-SCR", "measurement": "valve_position", "description": "Scour valve status", "unit": "", "range": [0, 1], "signal": "digital" }
+  ],
+  "OFFTAKE_GRAVITY": [
+    { "suffix": "FT-001", "measurement": "flow", "description": "Bulk flow meter (instantaneous)", "unit": "m³/h", "range": [0, 500], "alarm_high": 450, "signal": "modbus" },
+    { "suffix": "FT-TOT", "measurement": "flow", "description": "Bulk flow meter (totalised)", "unit": "m³", "range": [0, 99999999], "signal": "modbus" },
+    { "suffix": "PT-UP", "measurement": "pressure", "description": "Pressure upstream of PRV", "unit": "bar", "range": [0, 20], "signal": "4-20mA" },
+    { "suffix": "PT-DN", "measurement": "pressure", "description": "Pressure downstream of PRV", "unit": "bar", "range": [0, 10], "signal": "4-20mA" },
+    { "suffix": "VLV-ISO", "measurement": "valve_position", "description": "Actuated isolation valve position", "unit": "%", "range": [0, 100], "signal": "modbus" },
+    { "suffix": "VLV-ISO-REM", "measurement": "status", "description": "Isolation valve remote status", "unit": "", "range": [0, 1], "signal": "digital" }
+  ],
+  "OFFTAKE_DUAL": [
+    { "suffix": "FT-KONDOA", "measurement": "flow", "description": "Kondoa leg bulk flow meter", "unit": "m³/h", "range": [0, 500], "signal": "modbus" },
+    { "suffix": "FT-KONDOA-TOT", "measurement": "flow", "description": "Kondoa leg totalised flow", "unit": "m³", "range": [0, 99999999], "signal": "modbus" },
+    { "suffix": "FT-CHEMBA", "measurement": "flow", "description": "Chemba leg bulk flow meter", "unit": "m³/h", "range": [0, 500], "signal": "modbus" },
+    { "suffix": "FT-CHEMBA-TOT", "measurement": "flow", "description": "Chemba leg totalised flow", "unit": "m³", "range": [0, 99999999], "signal": "modbus" },
+    { "suffix": "PT-UP", "measurement": "pressure", "description": "Upstream pressure", "unit": "bar", "range": [0, 20], "signal": "4-20mA" },
+    { "suffix": "VLV-ISO-A", "measurement": "valve_position", "description": "Isolation valve A position", "unit": "%", "range": [0, 100], "signal": "modbus" },
+    { "suffix": "VLV-ISO-B", "measurement": "valve_position", "description": "Isolation valve B position", "unit": "%", "range": [0, 100], "signal": "modbus" }
+  ],
+  "OFFTAKE_PUMPED": [
+    { "suffix": "FT-001", "measurement": "flow", "description": "Bulk flow meter (instantaneous)", "unit": "m³/h", "range": [0, 1500], "signal": "modbus" },
+    { "suffix": "FT-TOT", "measurement": "flow", "description": "Bulk flow meter (totalised)", "unit": "m³", "range": [0, 99999999], "signal": "modbus" },
+    { "suffix": "PT-UP", "measurement": "pressure", "description": "Upstream pressure", "unit": "bar", "range": [0, 20], "signal": "4-20mA" },
+    { "suffix": "PT-DN", "measurement": "pressure", "description": "Downstream pressure", "unit": "bar", "range": [0, 10], "signal": "4-20mA" },
+    { "suffix": "VLV-ISO", "measurement": "valve_position", "description": "Isolation valve position", "unit": "%", "range": [0, 100], "signal": "modbus" },
+    { "suffix": "PT-SUCT", "measurement": "pressure", "description": "Pump suction pressure", "unit": "bar", "range": [-1, 10], "signal": "4-20mA" },
+    { "suffix": "PT-DELY", "measurement": "pressure", "description": "Pump delivery pressure", "unit": "bar", "range": [0, 30], "signal": "4-20mA" },
+    { "suffix": "P{n}-RUN", "measurement": "status", "description": "Pump {n} run status", "unit": "", "range": [0, 1], "signal": "digital", "per_pump": true },
+    { "suffix": "P{n}-FLT", "measurement": "status", "description": "Pump {n} fault", "unit": "", "range": [0, 1], "signal": "digital", "per_pump": true },
+    { "suffix": "P{n}-CURR", "measurement": "current", "description": "Pump {n} motor current", "unit": "A", "range": [0, 500], "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-KW", "measurement": "power", "description": "Pump {n} active power", "unit": "kW", "range": [0, 2000], "signal": "modbus", "per_pump": true }
+  ]
+}
