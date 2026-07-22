@@ -1,0 +1,396 @@
+{
+ "pathKm": 620.2,
+ "sites": {
+  "MBALIKA_INTAKE": {
+   "lat": -2.91403,
+   "lng": 32.82589,
+   "elev": 1146,
+   "nodeId": "156754"
+  },
+  "MBALIKA_WTP": {
+   "lat": -2.91818,
+   "lng": 32.83163,
+   "elev": 1172,
+   "nodeId": "156828-A"
+  },
+  "MABALE_IBPS": {
+   "lat": -3.28787,
+   "lng": 33.1222,
+   "elev": 1176,
+   "nodeId": "115961"
+  },
+  "MABALE_BR": {
+   "lat": -3.22106,
+   "lng": 33.06354,
+   "elev": 1365,
+   "nodeId": "150353"
+  },
+  "MABALE_PR": {
+   "lat": -3.32476,
+   "lng": 33.55512,
+   "elev": 1293,
+   "nodeId": "150342"
+  },
+  "SHILEMBO_PR": {
+   "lat": -3.47636,
+   "lng": 34.04638,
+   "elev": 1199,
+   "nodeId": "93414"
+  },
+  "WISHITELEJA_PR": {
+   "lat": -3.75564,
+   "lng": 34.42233,
+   "elev": 1117,
+   "nodeId": "107336"
+  },
+  "SIBITI_IBPS1": {
+   "lat": -4.06613,
+   "lng": 34.47071,
+   "elev": 1105,
+   "nodeId": "155732-A"
+  },
+  "KIDARU_IBPS2": {
+   "lat": -4.1224,
+   "lng": 34.46139,
+   "elev": 1370,
+   "nodeId": "154855-A"
+  },
+  "KISIRIRI_IBPS3": {
+   "lat": -4.83161,
+   "lng": 34.82478,
+   "elev": 1600,
+   "nodeId": "147125-A"
+  },
+  "KISANA_BR": {
+   "lat": -4.85493,
+   "lng": 34.86996,
+   "elev": 1781,
+   "nodeId": "146454"
+  },
+  "SINGIDA_PS": {
+   "lat": -4.98279,
+   "lng": 34.78175,
+   "elev": 1614,
+   "nodeId": "150655"
+  },
+  "SINGIDA_PR": {
+   "lat": -4.98284,
+   "lng": 34.78169,
+   "elev": 1629,
+   "nodeId": "150652"
+  },
+  "KWAMTORO_JCT": {
+   "lat": -5.34034,
+   "lng": 34.77735,
+   "elev": 1389,
+   "nodeId": "68749"
+  },
+  "CHEMBA_PR": {
+   "lat": -5.22837,
+   "lng": 35.9047,
+   "elev": 1500,
+   "nodeId": "150393"
+  },
+  "KONDOA_PR": {
+   "lat": -4.91166,
+   "lng": 35.83799,
+   "elev": 1537,
+   "nodeId": "146460"
+  },
+  "ISALANDA_PR": {
+   "lat": -5.27132,
+   "lng": 35.63892,
+   "elev": 1119,
+   "nodeId": "113589"
+  },
+  "MKWESE_PR": {
+   "lat": -6.22963,
+   "lng": 35.79364,
+   "elev": 1401,
+   "nodeId": "150422"
+  },
+  "BAHI_PR": {
+   "lat": -5.93808,
+   "lng": 35.31264,
+   "elev": 855,
+   "nodeId": "150678"
+  },
+  "NGHAMBALA_IBPS": {
+   "lat": -6.06699,
+   "lng": 35.52063,
+   "elev": 1010,
+   "nodeId": "157057-A"
+  },
+  "NTYUKA_IBPS": {
+   "lat": -6.24489,
+   "lng": 35.73902,
+   "elev": 1202,
+   "nodeId": "157084-A"
+  },
+  "UDOM_BR": {
+   "lat": -6.22956,
+   "lng": 35.79368,
+   "elev": 1403,
+   "nodeId": "146461"
+  }
+ },
+ "lineOverrides": {
+  "V-GM1-PRV1": {
+   "lat": -3.43866,
+   "lng": 33.66905,
+   "elev": 1182,
+   "chainage_km": 124,
+   "nodeId": "111331"
+  },
+  "V-GM1-PRV2": {
+   "lat": -3.47934,
+   "lng": 34.17699,
+   "elev": 1185,
+   "chainage_km": 180.9,
+   "nodeId": "76119"
+  },
+  "V-GM2-PRV1": {
+   "lat": -5.15502,
+   "lng": 34.77818,
+   "elev": 1496,
+   "chainage_km": 413.4,
+   "nodeId": "106001"
+  },
+  "V-GM2-PRV2": {
+   "lat": -5.89116,
+   "lng": 35.1827,
+   "elev": 841,
+   "chainage_km": 537.5,
+   "nodeId": "83353"
+  },
+  "V-UDM-PRV": {
+   "lat": -6.23778,
+   "lng": 35.77693,
+   "elev": 1316,
+   "chainage_km": 618.1,
+   "nodeId": "104954"
+  }
+ },
+ "lineFittings": [
+  {
+   "id": "V-ARV-01",
+   "type": "ARV",
+   "name": "Air Valve AV-01 (high point km 18)",
+   "chainage_km": 17.7,
+   "lat": -3.06689,
+   "lng": 32.81646,
+   "elev": 1444,
+   "nodeId": "156708-A",
+   "basePressure_bar": 1.9
+  },
+  {
+   "id": "V-ARV-02",
+   "type": "ARV",
+   "name": "Air Valve AV-02 (high point km 53)",
+   "chainage_km": 53.2,
+   "lat": -3.2505,
+   "lng": 33.07457,
+   "elev": 1209,
+   "nodeId": "93533",
+   "basePressure_bar": 25
+  },
+  {
+   "id": "V-ARV-03",
+   "type": "ARV",
+   "name": "Air Valve AV-03 (high point km 98)",
+   "chainage_km": 97.5,
+   "lat": -3.4186,
+   "lng": 33.43114,
+   "elev": 1225,
+   "nodeId": "97140",
+   "basePressure_bar": 3.7
+  },
+  {
+   "id": "V-ARV-04",
+   "type": "ARV",
+   "name": "Air Valve AV-04 (high point km 138)",
+   "chainage_km": 138.2,
+   "lat": -3.44951,
+   "lng": 33.79614,
+   "elev": 1190,
+   "nodeId": "80120",
+   "basePressure_bar": 6.9
+  },
+  {
+   "id": "V-ARV-05",
+   "type": "ARV",
+   "name": "Air Valve AV-05 (high point km 166)",
+   "chainage_km": 166.1,
+   "lat": -3.47628,
+   "lng": 34.04526,
+   "elev": 1202,
+   "nodeId": "108226",
+   "basePressure_bar": 4.8
+  },
+  {
+   "id": "V-ARV-06",
+   "type": "ARV",
+   "name": "Air Valve AV-06 (high point km 193)",
+   "chainage_km": 192.8,
+   "lat": -3.49051,
+   "lng": 34.28365,
+   "elev": 1211,
+   "nodeId": "81130",
+   "basePressure_bar": 3.8
+  },
+  {
+   "id": "V-ARV-07",
+   "type": "ARV",
+   "name": "Air Valve AV-07 (high point km 293)",
+   "chainage_km": 292.7,
+   "lat": -4.22945,
+   "lng": 34.48834,
+   "elev": 1773,
+   "nodeId": "156068",
+   "basePressure_bar": 3.9
+  },
+  {
+   "id": "V-ARV-08",
+   "type": "ARV",
+   "name": "Air Valve AV-08 (high point km 385)",
+   "chainage_km": 384.6,
+   "lat": -4.89603,
+   "lng": 34.79482,
+   "elev": 1634,
+   "nodeId": "155840",
+   "basePressure_bar": 3.8
+  },
+  {
+   "id": "V-ARV-09",
+   "type": "ARV",
+   "name": "Air Valve AV-09 (high point km 419)",
+   "chainage_km": 419.2,
+   "lat": -5.20688,
+   "lng": 34.78502,
+   "elev": 1470,
+   "nodeId": "86776",
+   "basePressure_bar": 19.9
+  },
+  {
+   "id": "V-ARV-10",
+   "type": "ARV",
+   "name": "Air Valve AV-10 (high point km 471)",
+   "chainage_km": 471.1,
+   "lat": -5.63644,
+   "lng": 34.67545,
+   "elev": 1431,
+   "nodeId": "127764",
+   "basePressure_bar": 7.9
+  },
+  {
+   "id": "V-ARV-11",
+   "type": "ARV",
+   "name": "Air Valve AV-11 (high point km 497)",
+   "chainage_km": 496.7,
+   "lat": -5.76257,
+   "lng": 34.85876,
+   "elev": 1262,
+   "nodeId": "60673",
+   "basePressure_bar": 20.1
+  },
+  {
+   "id": "V-ARV-12",
+   "type": "ARV",
+   "name": "Air Valve AV-12 (high point km 611)",
+   "chainage_km": 611.2,
+   "lat": -6.24636,
+   "lng": 35.71585,
+   "elev": 1209,
+   "nodeId": "84155",
+   "basePressure_bar": 20.2
+  },
+  {
+   "id": "V-WO-01",
+   "type": "WO",
+   "name": "Washout WO-01 (low point km 14)",
+   "chainage_km": 13.6,
+   "lat": -3.03181,
+   "lng": 32.81594,
+   "elev": 1152,
+   "nodeId": "156217",
+   "basePressure_bar": 30.6
+  },
+  {
+   "id": "V-WO-02",
+   "type": "WO",
+   "name": "Washout WO-02 (low point km 67)",
+   "chainage_km": 66.9,
+   "lat": -3.32114,
+   "lng": 33.17515,
+   "elev": 1168,
+   "nodeId": "126626",
+   "basePressure_bar": 11.1
+  },
+  {
+   "id": "V-WO-03",
+   "type": "WO",
+   "name": "Washout WO-03 (low point km 108)",
+   "chainage_km": 107.7,
+   "lat": -3.42625,
+   "lng": 33.5223,
+   "elev": 1177,
+   "nodeId": "79021",
+   "basePressure_bar": 8.4
+  },
+  {
+   "id": "V-WO-04",
+   "type": "WO",
+   "name": "Washout WO-04 (low point km 169)",
+   "chainage_km": 169.1,
+   "lat": -3.48052,
+   "lng": 34.07165,
+   "elev": 1166,
+   "nodeId": "115170",
+   "basePressure_bar": 8.2
+  },
+  {
+   "id": "V-WO-05",
+   "type": "WO",
+   "name": "Washout WO-05 (low point km 253)",
+   "chainage_km": 252.5,
+   "lat": -3.94466,
+   "lng": 34.44687,
+   "elev": 1040,
+   "nodeId": "65883",
+   "basePressure_bar": 40
+  },
+  {
+   "id": "V-WO-06",
+   "type": "WO",
+   "name": "Washout WO-06 (low point km 525)",
+   "chainage_km": 524.8,
+   "lat": -5.87373,
+   "lng": 35.07054,
+   "elev": 834,
+   "nodeId": "120105",
+   "basePressure_bar": 40
+  },
+  {
+   "id": "V-WO-07",
+   "type": "WO",
+   "name": "Washout WO-07 (low point km 563)",
+   "chainage_km": 562.9,
+   "lat": -5.99799,
+   "lng": 35.38039,
+   "elev": 897,
+   "nodeId": "101698",
+   "basePressure_bar": 27.9
+  },
+  {
+   "id": "V-WO-08",
+   "type": "WO",
+   "name": "Washout WO-08 (low point km 596)",
+   "chainage_km": 596.1,
+   "lat": -6.16309,
+   "lng": 35.61349,
+   "elev": 1090,
+   "nodeId": "92316",
+   "basePressure_bar": 31.8
+  }
+ ]
+}

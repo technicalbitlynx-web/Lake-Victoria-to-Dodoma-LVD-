@@ -37,6 +37,7 @@ export interface ValveSpec {
   chainage_km: number;
   lat: number;
   lng: number;
+  elev_masl?: number;       // ground elevation at the EPANET node
   dn: number;               // nominal diameter mm
   pn: number;               // pressure rating bar
   actuation: 'MOTORISED' | 'MANUAL' | 'AUTOMATIC';
@@ -87,7 +88,7 @@ function lineFitting(p: Omit<ValveSpec, 'lat' | 'lng' | 'onMap'>): ValveSpec {
   return { ...p, lat, lng, onMap: true };
 }
 
-export const VALVES: ValveSpec[] = [
+const RAW_VALVES: ValveSpec[] = [
   /* ── Mbalika Intake & Raw Water Pumping Station (km 0) ── */
   stationValve({ id: 'V-INT-PEN1', name: 'Intake Penstock Gate', type: 'PENSTOCK', siteId: 'MBALIKA_INTAKE', segment: 'Mbalika Intake & RWPS', chainage_km: 0, lat: -2.62, lng: 33.48, dn: 2000, pn: 6, actuation: 'MOTORISED', controllable: true, defaultPosition: 100, basePressure_bar: 0.5, maxFlow_m3h: 3300, notes: 'Lake Victoria abstraction gate' }),
   stationValve({ id: 'V-INT-SUC1', name: 'RWPS Suction Header Isolation', type: 'ISO', siteId: 'MBALIKA_INTAKE', segment: 'Mbalika Intake & RWPS', chainage_km: 0, lat: -2.62, lng: 33.48, dn: 1600, pn: 10, actuation: 'MOTORISED', controllable: true, defaultPosition: 100, basePressure_bar: 0.8, maxFlow_m3h: 3300 }),
@@ -213,6 +214,63 @@ export const VALVES: ValveSpec[] = [
   stationValve({ id: 'V-UDM-IN', name: 'UDOM BR Inlet Flow Control Valve', type: 'BFV', siteId: 'UDOM_BR', segment: 'UDOM Terminal Reservoir', chainage_km: 600, lat: -6.17, lng: 35.74, dn: 1000, pn: 16, actuation: 'MOTORISED', controllable: true, defaultPosition: 70, basePressure_bar: 4, maxFlow_m3h: 2500, notes: 'Modulating inlet control — level-based flow modulation' }),
   stationValve({ id: 'V-UDM-ISO', name: 'UDOM BR Inlet Isolation', type: 'ISO', siteId: 'UDOM_BR', segment: 'UDOM Terminal Reservoir', chainage_km: 600, lat: -6.17, lng: 35.74, dn: 1200, pn: 16, actuation: 'MOTORISED', controllable: true, defaultPosition: 100, basePressure_bar: 4, maxFlow_m3h: 2500 }),
   stationValve({ id: 'V-UDM-SCR', name: 'UDOM BR Scour Valve', type: 'WO', siteId: 'UDOM_BR', segment: 'UDOM Terminal Reservoir', chainage_km: 600, lat: -6.17, lng: 35.74, dn: 400, pn: 10, actuation: 'MOTORISED', controllable: true, defaultPosition: 0, basePressure_bar: 1.3, maxFlow_m3h: 600 }),
+];
+
+/* ── Snap onto the MBALIKA2068 EPANET alignment ──
+ * scripts/snap-fittings.mjs traces the real main path through the model,
+ * snaps every SCADA site to its model node, repositions the in-line PRV
+ * stations, and generates air valves / washouts at the true local
+ * high/low points of the network elevation profile. */
+import SNAP from './network/snap.json';
+
+interface SnapPoint { lat: number; lng: number; elev: number; nodeId: string; chainage_km?: number }
+const snapSites = SNAP.sites as Record<string, SnapPoint>;
+const lineOverrides = SNAP.lineOverrides as Record<string, SnapPoint>;
+
+interface SnapFitting {
+  id: string; type: string; name: string; chainage_km: number;
+  lat: number; lng: number; elev: number; nodeId: string; basePressure_bar: number;
+}
+
+const generatedLineFittings: ValveSpec[] = (SNAP.lineFittings as SnapFitting[]).map(f => ({
+  id: f.id,
+  name: f.name,
+  type: f.type as ValveType,
+  segment: 'Trunk Main — EPANET Alignment',
+  chainage_km: f.chainage_km,
+  lat: f.lat,
+  lng: f.lng,
+  elev_masl: f.elev,
+  dn: f.type === 'ARV' ? 200 : 600,
+  pn: f.basePressure_bar > 16 ? 40 : 25,
+  actuation: f.type === 'ARV' ? 'AUTOMATIC' : 'MANUAL',
+  controllable: false,
+  defaultPosition: f.type === 'ARV' ? 100 : 0,
+  basePressure_bar: f.basePressure_bar,
+  maxFlow_m3h: f.type === 'ARV' ? 0 : 1400,
+  onMap: true,
+  notes: f.type === 'ARV'
+    ? `Local high point (${f.elev} masl) on the modelled alignment — dual-orifice air release & vacuum break`
+    : `Local low point (${f.elev} masl) on the modelled alignment — sediment flushing / drain-down`,
+}));
+
+export const VALVES: ValveSpec[] = [
+  // station valves + in-line PRVs, repositioned onto the EPANET network
+  ...RAW_VALVES
+    .filter(v => !((v.type === 'ARV' || v.type === 'WO') && !v.siteId))  // old schematic line fittings replaced
+    .map(v => {
+      if (v.siteId && snapSites[v.siteId]) {
+        const s = snapSites[v.siteId];
+        return { ...v, lat: s.lat, lng: s.lng, elev_masl: s.elev };
+      }
+      if (lineOverrides[v.id]) {
+        const o = lineOverrides[v.id];
+        return { ...v, lat: o.lat, lng: o.lng, elev_masl: o.elev, chainage_km: o.chainage_km ?? v.chainage_km };
+      }
+      return v;
+    }),
+  // air valves & washouts at the model's true elevation extremes
+  ...generatedLineFittings,
 ];
 
 export const VALVES_BY_ID: Record<string, ValveSpec> = Object.fromEntries(VALVES.map(v => [v.id, v]));

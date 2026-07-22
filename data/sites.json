@@ -5,11 +5,21 @@
     "class": "INTAKE",
     "elevation_masl": 1145,
     "chainage_km": 0,
-    "lat": -2.62,
-    "lng": 33.48,
+    "lat": -2.91403,
+    "lng": 32.82589,
     "phase": "both",
-    "phase1": { "flow_m3h": 2914, "head_m": 44, "pumps_working": 10, "pumps_standby": 2 },
-    "phase2": { "flow_m3h": 5200, "head_m": 44, "pumps_working": 18, "pumps_standby": 3 }
+    "phase1": {
+      "flow_m3h": 2914,
+      "head_m": 44,
+      "pumps_working": 10,
+      "pumps_standby": 2
+    },
+    "phase2": {
+      "flow_m3h": 5200,
+      "head_m": 44,
+      "pumps_working": 18,
+      "pumps_standby": 3
+    }
   },
   {
     "id": "MBALIKA_WTP",
@@ -17,11 +27,21 @@
     "class": "WTP",
     "elevation_masl": 1171,
     "chainage_km": 1.5,
-    "lat": -2.63,
-    "lng": 33.50,
+    "lat": -2.91818,
+    "lng": 32.83163,
     "phase": "both",
-    "phase1": { "flow_m3h": 2710, "head_m": 240, "pumps_working": 10, "pumps_standby": 2 },
-    "phase2": { "flow_m3h": 4800, "head_m": 240, "pumps_working": 18, "pumps_standby": 3 }
+    "phase1": {
+      "flow_m3h": 2710,
+      "head_m": 240,
+      "pumps_working": 10,
+      "pumps_standby": 2
+    },
+    "phase2": {
+      "flow_m3h": 4800,
+      "head_m": 240,
+      "pumps_working": 18,
+      "pumps_standby": 3
+    }
   },
   {
     "id": "MABALE_IBPS",
@@ -29,11 +49,21 @@
     "class": "IBPS",
     "elevation_masl": 1395,
     "chainage_km": 58,
-    "lat": -2.95,
-    "lng": 33.72,
+    "lat": -3.28787,
+    "lng": 33.1222,
     "phase": "both",
-    "phase1": { "flow_m3h": 2710, "head_m": 83, "pumps_working": 10, "pumps_standby": 2 },
-    "phase2": { "flow_m3h": 4800, "head_m": 83, "pumps_working": 18, "pumps_standby": 3 }
+    "phase1": {
+      "flow_m3h": 2710,
+      "head_m": 83,
+      "pumps_working": 10,
+      "pumps_standby": 2
+    },
+    "phase2": {
+      "flow_m3h": 4800,
+      "head_m": 83,
+      "pumps_working": 18,
+      "pumps_standby": 3
+    }
   },
   {
     "id": "MABALE_BR",
@@ -41,11 +71,15 @@
     "class": "RESERVOIR",
     "elevation_masl": 1471,
     "chainage_km": 62,
-    "lat": -2.98,
-    "lng": 33.75,
+    "lat": -3.22106,
+    "lng": 33.06354,
     "phase": "both",
-    "phase1": { "capacity_m3": 175000 },
-    "phase2": { "capacity_m3": 400000 }
+    "phase1": {
+      "capacity_m3": 175000
+    },
+    "phase2": {
+      "capacity_m3": 400000
+    }
   },
   {
     "id": "MABALE_PR",
@@ -53,11 +87,15 @@
     "class": "OFFTAKE_GRAVITY",
     "elevation_masl": null,
     "chainage_km": 63,
-    "lat": -2.99,
-    "lng": 33.76,
+    "lat": -3.32476,
+    "lng": 33.55512,
     "phase": "both",
-    "phase1": { "pr_capacity_m3": 17000 },
-    "phase2": { "pr_capacity_m3": 17000 }
+    "phase1": {
+      "pr_capacity_m3": 17000
+    },
+    "phase2": {
+      "pr_capacity_m3": 17000
+    }
   },
   {
     "id": "SHILEMBO_PR",
@@ -65,11 +103,15 @@
     "class": "OFFTAKE_GRAVITY",
     "elevation_masl": 1365,
     "chainage_km": 120,
-    "lat": -3.42,
-    "lng": 34.05,
+    "lat": -3.47636,
+    "lng": 34.04638,
     "phase": "both",
-    "phase1": { "pr_capacity_m3": 5000 },
-    "phase2": { "pr_capacity_m3": 5000 }
+    "phase1": {
+      "pr_capacity_m3": 5000
+    },
+    "phase2": {
+      "pr_capacity_m3": 5000
+    }
   },
   {
     "id": "WISHITELEJA_PR",
@@ -77,11 +119,15 @@
     "class": "OFFTAKE_GRAVITY",
     "elevation_masl": 1294,
     "chainage_km": 175,
-    "lat": -3.75,
-    "lng": 34.30,
+    "lat": -3.75564,
+    "lng": 34.42233,
     "phase": "both",
-    "phase1": { "pr_capacity_m3": 12000 },
-    "phase2": { "pr_capacity_m3": 12000 }
+    "phase1": {
+      "pr_capacity_m3": 12000
+    },
+    "phase2": {
+      "pr_capacity_m3": 12000
+    }
   },
   {
     "id": "SIBITI_IBPS1",
@@ -89,11 +135,21 @@
     "class": "IBPS",
     "elevation_masl": 1106,
     "chainage_km": 220,
-    "lat": -4.05,
-    "lng": 34.52,
+    "lat": -4.06613,
+    "lng": 34.47071,
     "phase": "both",
-    "phase1": { "flow_m3h": 2197, "head_m": 275, "pumps_working": 10, "pumps_standby": 2 },
-    "phase2": { "flow_m3h": 3900, "head_m": 275, "pumps_working": 16, "pumps_standby": 3 }
+    "phase1": {
+      "flow_m3h": 2197,
+      "head_m": 275,
+      "pumps_working": 10,
+      "pumps_standby": 2
+    },
+    "phase2": {
+      "flow_m3h": 3900,
+      "head_m": 275,
+      "pumps_working": 16,
+      "pumps_standby": 3
+    }
   },
   {
     "id": "KIDARU_IBPS2",
@@ -101,11 +157,21 @@
     "class": "IBPS",
     "elevation_masl": 1370,
     "chainage_km": 280,
-    "lat": -4.40,
-    "lng": 34.80,
+    "lat": -4.1224,
+    "lng": 34.46139,
     "phase": "both",
-    "phase1": { "flow_m3h": 2197, "head_m": 236, "pumps_working": 10, "pumps_standby": 2 },
-    "phase2": { "flow_m3h": 3900, "head_m": 236, "pumps_working": 16, "pumps_standby": 3 }
+    "phase1": {
+      "flow_m3h": 2197,
+      "head_m": 236,
+      "pumps_working": 10,
+      "pumps_standby": 2
+    },
+    "phase2": {
+      "flow_m3h": 3900,
+      "head_m": 236,
+      "pumps_working": 16,
+      "pumps_standby": 3
+    }
   },
   {
     "id": "KISIRIRI_IBPS3",
@@ -113,11 +179,21 @@
     "class": "IBPS",
     "elevation_masl": 1593,
     "chainage_km": 340,
-    "lat": -4.75,
-    "lng": 35.10,
+    "lat": -4.83161,
+    "lng": 34.82478,
     "phase": "both",
-    "phase1": { "flow_m3h": 2197, "head_m": 196, "pumps_working": 10, "pumps_standby": 2 },
-    "phase2": { "flow_m3h": 3900, "head_m": 196, "pumps_working": 16, "pumps_standby": 3 }
+    "phase1": {
+      "flow_m3h": 2197,
+      "head_m": 196,
+      "pumps_working": 10,
+      "pumps_standby": 2
+    },
+    "phase2": {
+      "flow_m3h": 3900,
+      "head_m": 196,
+      "pumps_working": 16,
+      "pumps_standby": 3
+    }
   },
   {
     "id": "KISANA_BR",
@@ -125,11 +201,17 @@
     "class": "RESERVOIR",
     "elevation_masl": 1777,
     "chainage_km": 360,
-    "lat": -4.90,
-    "lng": 35.20,
+    "lat": -4.85493,
+    "lng": 34.86996,
     "phase": "both",
-    "phase1": { "capacity_m3": 125000, "pr_capacity_m3": 26800 },
-    "phase2": { "capacity_m3": 295000, "pr_capacity_m3": 26800 }
+    "phase1": {
+      "capacity_m3": 125000,
+      "pr_capacity_m3": 26800
+    },
+    "phase2": {
+      "capacity_m3": 295000,
+      "pr_capacity_m3": 26800
+    }
   },
   {
     "id": "SINGIDA_PS",
@@ -137,11 +219,21 @@
     "class": "OFFTAKE_PUMPED",
     "elevation_masl": 1605,
     "chainage_km": 370,
-    "lat": -4.82,
-    "lng": 34.75,
+    "lat": -4.98279,
+    "lng": 34.78175,
     "phase": "both",
-    "phase1": { "flow_m3h": 1055, "head_m": 199, "pumps_working": 4, "pumps_standby": 1 },
-    "phase2": { "flow_m3h": 1900, "head_m": 199, "pumps_working": 7, "pumps_standby": 2 }
+    "phase1": {
+      "flow_m3h": 1055,
+      "head_m": 199,
+      "pumps_working": 4,
+      "pumps_standby": 1
+    },
+    "phase2": {
+      "flow_m3h": 1900,
+      "head_m": 199,
+      "pumps_working": 7,
+      "pumps_standby": 2
+    }
   },
   {
     "id": "SINGIDA_PR",
@@ -149,11 +241,15 @@
     "class": "RESERVOIR",
     "elevation_masl": 1781,
     "chainage_km": 380,
-    "lat": -4.80,
-    "lng": 34.72,
+    "lat": -4.98284,
+    "lng": 34.78169,
     "phase": "both",
-    "phase1": { "capacity_m3": 26800 },
-    "phase2": { "capacity_m3": 26800 }
+    "phase1": {
+      "capacity_m3": 26800
+    },
+    "phase2": {
+      "capacity_m3": 26800
+    }
   },
   {
     "id": "KWAMTORO_JCT",
@@ -161,9 +257,12 @@
     "class": "OFFTAKE_DUAL",
     "elevation_masl": null,
     "chainage_km": 420,
-    "lat": -5.00,
-    "lng": 35.45,
-    "downstream_legs": ["Kondoa", "Chemba"],
+    "lat": -5.34034,
+    "lng": 34.77735,
+    "downstream_legs": [
+      "Kondoa",
+      "Chemba"
+    ],
     "phase": "both",
     "phase1": {},
     "phase2": {}
@@ -174,11 +273,23 @@
     "class": "IBPS",
     "elevation_masl": 1537,
     "chainage_km": 460,
-    "lat": -4.90,
-    "lng": 35.78,
+    "lat": -4.91166,
+    "lng": 35.83799,
     "phase": "both",
-    "phase1": { "flow_m3h": 122, "head_m": 339, "pumps_working": 1, "pumps_standby": 1, "pr_capacity_m3": 3500 },
-    "phase2": { "flow_m3h": 250, "head_m": 339, "pumps_working": 2, "pumps_standby": 1, "pr_capacity_m3": 3500 }
+    "phase1": {
+      "flow_m3h": 122,
+      "head_m": 339,
+      "pumps_working": 1,
+      "pumps_standby": 1,
+      "pr_capacity_m3": 3500
+    },
+    "phase2": {
+      "flow_m3h": 250,
+      "head_m": 339,
+      "pumps_working": 2,
+      "pumps_standby": 1,
+      "pr_capacity_m3": 3500
+    }
   },
   {
     "id": "CHEMBA_PR",
@@ -186,11 +297,23 @@
     "class": "IBPS",
     "elevation_masl": 1500,
     "chainage_km": 450,
-    "lat": -5.35,
-    "lng": 36.22,
+    "lat": -5.22837,
+    "lng": 35.9047,
     "phase": "both",
-    "phase1": { "flow_m3h": 453, "head_m": 259, "pumps_working": 3, "pumps_standby": 1, "pr_capacity_m3": 11600 },
-    "phase2": { "flow_m3h": 800, "head_m": 259, "pumps_working": 5, "pumps_standby": 1, "pr_capacity_m3": 11600 }
+    "phase1": {
+      "flow_m3h": 453,
+      "head_m": 259,
+      "pumps_working": 3,
+      "pumps_standby": 1,
+      "pr_capacity_m3": 11600
+    },
+    "phase2": {
+      "flow_m3h": 800,
+      "head_m": 259,
+      "pumps_working": 5,
+      "pumps_standby": 1,
+      "pr_capacity_m3": 11600
+    }
   },
   {
     "id": "ISALANDA_PR",
@@ -198,11 +321,15 @@
     "class": "OFFTAKE_GRAVITY",
     "elevation_masl": 1629,
     "chainage_km": 470,
-    "lat": -5.45,
-    "lng": 35.55,
+    "lat": -5.27132,
+    "lng": 35.63892,
     "phase": "both",
-    "phase1": { "pr_capacity_m3": 9500 },
-    "phase2": { "pr_capacity_m3": 9500 }
+    "phase1": {
+      "pr_capacity_m3": 9500
+    },
+    "phase2": {
+      "pr_capacity_m3": 9500
+    }
   },
   {
     "id": "MKWESE_PR",
@@ -210,11 +337,15 @@
     "class": "OFFTAKE_GRAVITY",
     "elevation_masl": 1394,
     "chainage_km": 510,
-    "lat": -5.70,
-    "lng": 35.65,
+    "lat": -6.22963,
+    "lng": 35.79364,
     "phase": "both",
-    "phase1": { "pr_capacity_m3": 8500 },
-    "phase2": { "pr_capacity_m3": 8500 }
+    "phase1": {
+      "pr_capacity_m3": 8500
+    },
+    "phase2": {
+      "pr_capacity_m3": 8500
+    }
   },
   {
     "id": "BAHI_PR",
@@ -222,11 +353,15 @@
     "class": "OFFTAKE_GRAVITY",
     "elevation_masl": 932,
     "chainage_km": 545,
-    "lat": -5.95,
-    "lng": 35.33,
+    "lat": -5.93808,
+    "lng": 35.31264,
     "phase": "both",
-    "phase1": { "pr_capacity_m3": 10500 },
-    "phase2": { "pr_capacity_m3": 10500 }
+    "phase1": {
+      "pr_capacity_m3": 10500
+    },
+    "phase2": {
+      "pr_capacity_m3": 10500
+    }
   },
   {
     "id": "NGHAMBALA_IBPS",
@@ -234,12 +369,22 @@
     "class": "IBPS",
     "elevation_masl": null,
     "chainage_km": 555,
-    "lat": -5.88,
-    "lng": 35.60,
+    "lat": -6.06699,
+    "lng": 35.52063,
     "indicative_position": true,
     "phase": "both",
-    "phase1": { "flow_m3h": 2169, "head_m": 235, "pumps_working": 4, "pumps_standby": 1 },
-    "phase2": { "flow_m3h": 6280, "head_m": 235, "pumps_working": 10, "pumps_standby": 2 }
+    "phase1": {
+      "flow_m3h": 2169,
+      "head_m": 235,
+      "pumps_working": 4,
+      "pumps_standby": 1
+    },
+    "phase2": {
+      "flow_m3h": 6280,
+      "head_m": 235,
+      "pumps_working": 10,
+      "pumps_standby": 2
+    }
   },
   {
     "id": "NTYUKA_IBPS",
@@ -247,11 +392,21 @@
     "class": "IBPS",
     "elevation_masl": 1196,
     "chainage_km": 578,
-    "lat": -6.00,
-    "lng": 35.70,
+    "lat": -6.24489,
+    "lng": 35.73902,
     "phase": "both",
-    "phase1": { "flow_m3h": 2169, "head_m": 215, "pumps_working": 4, "pumps_standby": 1 },
-    "phase2": { "flow_m3h": 6280, "head_m": 215, "pumps_working": 10, "pumps_standby": 2 }
+    "phase1": {
+      "flow_m3h": 2169,
+      "head_m": 215,
+      "pumps_working": 4,
+      "pumps_standby": 1
+    },
+    "phase2": {
+      "flow_m3h": 6280,
+      "head_m": 215,
+      "pumps_working": 10,
+      "pumps_standby": 2
+    }
   },
   {
     "id": "UDOM_BR",
@@ -259,10 +414,14 @@
     "class": "RESERVOIR",
     "elevation_masl": 1402,
     "chainage_km": 600,
-    "lat": -6.17,
-    "lng": 35.74,
+    "lat": -6.22956,
+    "lng": 35.79368,
     "phase": "both",
-    "phase1": { "capacity_m3": 55500 },
-    "phase2": { "capacity_m3": 156500 }
+    "phase1": {
+      "capacity_m3": 55500
+    },
+    "phase2": {
+      "capacity_m3": 156500
+    }
   }
 ]

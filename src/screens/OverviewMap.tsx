@@ -217,12 +217,12 @@ function fittingDataLines(spec: ValveSpec, rt: ValveRuntime | undefined): [strin
     case 'ARV':
       return [
         `${rt.status} · DN${spec.dn} dual orifice`,
-        `Line ${rt.upstream_bar.toFixed(1)} bar`,
+        `Line ${rt.upstream_bar.toFixed(1)} bar${spec.elev_masl ? ` · HP ${spec.elev_masl} masl` : ''}`,
       ];
     default: // WO
       return [
         `${rt.status} · DN${spec.dn}`,
-        `Line ${rt.upstream_bar.toFixed(1)} bar`,
+        `Line ${rt.upstream_bar.toFixed(1)} bar${spec.elev_masl ? ` · LP ${spec.elev_masl} masl` : ''}`,
       ];
   }
 }
@@ -422,14 +422,15 @@ export default function OverviewMap() {
                   <div style={{ minWidth: 210 }}>
                     <div style={{ fontWeight: 700, color: c, marginBottom: 2 }}>{spec.name}</div>
                     <div style={{ color: '#94a3b8', fontSize: 10, marginBottom: 6 }}>
-                      {VALVE_TYPE_LABELS[spec.type]} · DN{spec.dn} PN{spec.pn} · km {spec.chainage_km.toFixed(1)} · {spec.actuation}
+                      {VALVE_TYPE_LABELS[spec.type]} · DN{spec.dn} PN{spec.pn} · km {spec.chainage_km.toFixed(1)}{spec.elev_masl ? ` · ${spec.elev_masl} masl` : ''} · {spec.actuation}
                     </div>
                     {rt && (
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3px 10px', fontSize: 11, fontFamily: 'monospace' }}>
                         <span style={{ color: '#6b7280' }}>Status</span><span style={{ color: c, fontWeight: 700 }}>{rt.status}</span>
                         {spec.type !== 'ARV' && (<><span style={{ color: '#6b7280' }}>Position</span><span>{rt.position.toFixed(0)} %</span></>)}
-                        <span style={{ color: '#6b7280' }}>Upstream</span><span>{rt.upstream_bar.toFixed(2)} bar</span>
+                        <span style={{ color: '#6b7280' }}>Line pressure</span><span>{rt.upstream_bar.toFixed(2)} bar</span>
                         {rt.downstream_bar > 0 && (<><span style={{ color: '#6b7280' }}>Downstream</span><span>{rt.downstream_bar.toFixed(2)} bar</span></>)}
+                        {spec.elev_masl !== undefined && (<><span style={{ color: '#6b7280' }}>Static head</span><span>{(rt.upstream_bar * 10.2).toFixed(0)} m w.c.</span></>)}
                         {spec.setpoint_bar !== undefined && (<><span style={{ color: '#6b7280' }}>Set pressure</span><span style={{ color: '#facc15' }}>{spec.setpoint_bar} bar</span></>)}
                         {rt.flow_m3h > 0 && (<><span style={{ color: '#6b7280' }}>Flow</span><span>{rt.flow_m3h.toFixed(0)} m³/h</span></>)}
                       </div>
@@ -486,6 +487,8 @@ export default function OverviewMap() {
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3px 10px', fontSize: 11, fontFamily: 'monospace' }}>
                       <span style={{ color: '#6b7280' }}>Status</span><span style={{ color: '#4ade80', fontWeight: 700 }}>HEALTHY</span>
                       <span style={{ color: '#6b7280' }}>Flow (inst.)</span><span>{flow.toFixed(1)} m³/h</span>
+                      <span style={{ color: '#6b7280' }}>Velocity</span><span>{(flow / 3600 / (Math.PI / 4 * (m.dn / 1000) ** 2)).toFixed(2)} m/s</span>
+                      <span style={{ color: '#6b7280' }}>Est. daily</span><span>{Math.round(flow * 24).toLocaleString()} m³/d</span>
                       <span style={{ color: '#6b7280' }}>Totalised</span><span>{Math.round(tot).toLocaleString()} m³</span>
                       <span style={{ color: '#6b7280' }}>Duty</span><span style={{ fontSize: 9 }}>{m.duty}</span>
                     </div>
