@@ -1,0 +1,1512 @@
+{
+ "meta": {
+  "note": "Instrument register bridging model nodes to physical tags. transducerElev_m is null everywhere — it is NOT in the design documents and must be surveyed. The comparison engine returns null (not a guess) for head error until it is provided.",
+  "conversionConstant_m_per_bar": 10.1972,
+  "uploadCadenceMinutes": 5,
+  "generatedAt": "2026-07-22T20:09:17.295Z",
+  "instrumentCount": 100,
+  "onTrunkCount": 75
+ },
+ "instruments": [
+  {
+   "site": "Mbalika Intake / Raw Water (Low Lift) PS",
+   "modelNodeId": {
+    "2058": "155421",
+    "2068": "156754"
+   },
+   "chainage_m": 0,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "MBI_LT_TNK_001",
+   "measurand": "level",
+   "location": "tank",
+   "units": "m",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mbalika Intake / Raw Water (Low Lift) PS",
+   "modelNodeId": {
+    "2058": "155421",
+    "2068": "156754"
+   },
+   "chainage_m": 0,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "MBI_FT_INL_001",
+   "measurand": "flow",
+   "location": "inlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mbalika Intake / Raw Water (Low Lift) PS",
+   "modelNodeId": {
+    "2058": "155421",
+    "2068": "156754"
+   },
+   "chainage_m": 0,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "MBI_FT_OUT_001",
+   "measurand": "flow",
+   "location": "outlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mbalika Intake / Raw Water (Low Lift) PS",
+   "modelNodeId": {
+    "2058": "155421",
+    "2068": "156754"
+   },
+   "chainage_m": 0,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "MBI_PT_INL_001",
+   "measurand": "pressure",
+   "location": "inlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mbalika Intake / Raw Water (Low Lift) PS",
+   "modelNodeId": {
+    "2058": "155421",
+    "2068": "156754"
+   },
+   "chainage_m": 0,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "MBI_PT_OUT_001",
+   "measurand": "pressure",
+   "location": "outlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mbalika WTP / Treated Water High Lift PS",
+   "modelNodeId": {
+    "2058": "155420",
+    "2068": "156758"
+   },
+   "chainage_m": 783,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "WTP_LT_TNK_001",
+   "measurand": "level",
+   "location": "tank",
+   "units": "m",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mbalika WTP / Treated Water High Lift PS",
+   "modelNodeId": {
+    "2058": "155420",
+    "2068": "156758"
+   },
+   "chainage_m": 783,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "WTP_FT_INL_001",
+   "measurand": "flow",
+   "location": "inlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mbalika WTP / Treated Water High Lift PS",
+   "modelNodeId": {
+    "2058": "155420",
+    "2068": "156758"
+   },
+   "chainage_m": 783,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "WTP_FT_OUT_001",
+   "measurand": "flow",
+   "location": "outlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mbalika WTP / Treated Water High Lift PS",
+   "modelNodeId": {
+    "2058": "155420",
+    "2068": "156758"
+   },
+   "chainage_m": 783,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "WTP_PT_INL_001",
+   "measurand": "pressure",
+   "location": "inlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mbalika WTP / Treated Water High Lift PS",
+   "modelNodeId": {
+    "2058": "155420",
+    "2068": "156758"
+   },
+   "chainage_m": 783,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "WTP_PT_OUT_001",
+   "measurand": "pressure",
+   "location": "outlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mabale B Balancing Reservoir",
+   "modelNodeId": {
+    "2058": "146495",
+    "2068": "146495"
+   },
+   "chainage_m": 18520,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "MBR_LT_TNK_001",
+   "measurand": "level",
+   "location": "tank",
+   "units": "m",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mabale B Balancing Reservoir",
+   "modelNodeId": {
+    "2058": "146495",
+    "2068": "146495"
+   },
+   "chainage_m": 18520,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "MBR_FT_INL_001",
+   "measurand": "flow",
+   "location": "inlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mabale B Balancing Reservoir",
+   "modelNodeId": {
+    "2058": "146495",
+    "2068": "146495"
+   },
+   "chainage_m": 18520,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "MBR_FT_OUT_001",
+   "measurand": "flow",
+   "location": "outlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mabale B Balancing Reservoir",
+   "modelNodeId": {
+    "2058": "146495",
+    "2068": "146495"
+   },
+   "chainage_m": 18520,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "MBR_PT_INL_001",
+   "measurand": "pressure",
+   "location": "inlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mabale B Balancing Reservoir",
+   "modelNodeId": {
+    "2058": "146495",
+    "2068": "146495"
+   },
+   "chainage_m": 18520,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "MBR_PT_OUT_001",
+   "measurand": "pressure",
+   "location": "outlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mabale B Primary Reservoir",
+   "modelNodeId": {
+    "2058": "150367",
+    "2068": "150367"
+   },
+   "chainage_m": 21953,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "MPR_LT_TNK_001",
+   "measurand": "level",
+   "location": "tank",
+   "units": "m",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mabale B Primary Reservoir",
+   "modelNodeId": {
+    "2058": "150367",
+    "2068": "150367"
+   },
+   "chainage_m": 21953,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "MPR_FT_INL_001",
+   "measurand": "flow",
+   "location": "inlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mabale B Primary Reservoir",
+   "modelNodeId": {
+    "2058": "150367",
+    "2068": "150367"
+   },
+   "chainage_m": 21953,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "MPR_FT_OUT_001",
+   "measurand": "flow",
+   "location": "outlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mabale B Primary Reservoir",
+   "modelNodeId": {
+    "2058": "150367",
+    "2068": "150367"
+   },
+   "chainage_m": 21953,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "MPR_PT_INL_001",
+   "measurand": "pressure",
+   "location": "inlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mabale B Primary Reservoir",
+   "modelNodeId": {
+    "2058": "150367",
+    "2068": "150367"
+   },
+   "chainage_m": 21953,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "MPR_PT_OUT_001",
+   "measurand": "pressure",
+   "location": "outlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Shilembo PR",
+   "modelNodeId": {
+    "2058": "150353",
+    "2068": "150353"
+   },
+   "chainage_m": 51282,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "SHI_LT_TNK_001",
+   "measurand": "level",
+   "location": "tank",
+   "units": "m",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Shilembo PR",
+   "modelNodeId": {
+    "2058": "150353",
+    "2068": "150353"
+   },
+   "chainage_m": 51282,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "SHI_FT_INL_001",
+   "measurand": "flow",
+   "location": "inlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Shilembo PR",
+   "modelNodeId": {
+    "2058": "150353",
+    "2068": "150353"
+   },
+   "chainage_m": 51282,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "SHI_FT_OUT_001",
+   "measurand": "flow",
+   "location": "outlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Shilembo PR",
+   "modelNodeId": {
+    "2058": "150353",
+    "2068": "150353"
+   },
+   "chainage_m": 51282,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "SHI_PT_INL_001",
+   "measurand": "pressure",
+   "location": "inlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Shilembo PR",
+   "modelNodeId": {
+    "2058": "150353",
+    "2068": "150353"
+   },
+   "chainage_m": 51282,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "SHI_PT_OUT_001",
+   "measurand": "pressure",
+   "location": "outlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Wishiteleja PR",
+   "modelNodeId": {
+    "2058": "150339",
+    "2068": "150339"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "WIS_LT_TNK_001",
+   "measurand": "level",
+   "location": "tank",
+   "units": "m",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Wishiteleja PR",
+   "modelNodeId": {
+    "2058": "150339",
+    "2068": "150339"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "WIS_FT_INL_001",
+   "measurand": "flow",
+   "location": "inlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Wishiteleja PR",
+   "modelNodeId": {
+    "2058": "150339",
+    "2068": "150339"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "WIS_FT_OUT_001",
+   "measurand": "flow",
+   "location": "outlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Wishiteleja PR",
+   "modelNodeId": {
+    "2058": "150339",
+    "2068": "150339"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "WIS_PT_INL_001",
+   "measurand": "pressure",
+   "location": "inlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Wishiteleja PR",
+   "modelNodeId": {
+    "2058": "150339",
+    "2068": "150339"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "WIS_PT_OUT_001",
+   "measurand": "pressure",
+   "location": "outlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Sibiti IBPS",
+   "modelNodeId": {
+    "2058": "147143",
+    "2068": "147143"
+   },
+   "chainage_m": 266994,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "SBT_PT_SUC_001",
+   "measurand": "pressure",
+   "location": "suction_manifold",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Sibiti IBPS",
+   "modelNodeId": {
+    "2058": "147143",
+    "2068": "147143"
+   },
+   "chainage_m": 266994,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "SBT_PT_DEL_001",
+   "measurand": "pressure",
+   "location": "delivery_manifold",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Sibiti IBPS",
+   "modelNodeId": {
+    "2058": "147143",
+    "2068": "147143"
+   },
+   "chainage_m": 266994,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "SBT_FT_DEL_001",
+   "measurand": "flow",
+   "location": "delivery_manifold",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Sibiti IBPS",
+   "modelNodeId": {
+    "2058": "147143",
+    "2068": "147143"
+   },
+   "chainage_m": 266994,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "SBT_XS_RUN_001",
+   "measurand": "status",
+   "location": "pump",
+   "units": "",
+   "accuracyPctOfReading": 0
+  },
+  {
+   "site": "Sibiti IBPS",
+   "modelNodeId": {
+    "2058": "147143",
+    "2068": "147143"
+   },
+   "chainage_m": 266994,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "SBT_IT_MTR_001",
+   "measurand": "current",
+   "location": "pump",
+   "units": "A",
+   "accuracyPctOfReading": 1
+  },
+  {
+   "site": "Kidaru IBPS",
+   "modelNodeId": {
+    "2058": "150291",
+    "2068": "150291"
+   },
+   "chainage_m": 274622,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "KID_PT_SUC_001",
+   "measurand": "pressure",
+   "location": "suction_manifold",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Kidaru IBPS",
+   "modelNodeId": {
+    "2058": "150291",
+    "2068": "150291"
+   },
+   "chainage_m": 274622,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "KID_PT_DEL_001",
+   "measurand": "pressure",
+   "location": "delivery_manifold",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Kidaru IBPS",
+   "modelNodeId": {
+    "2058": "150291",
+    "2068": "150291"
+   },
+   "chainage_m": 274622,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "KID_FT_DEL_001",
+   "measurand": "flow",
+   "location": "delivery_manifold",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Kidaru IBPS",
+   "modelNodeId": {
+    "2058": "150291",
+    "2068": "150291"
+   },
+   "chainage_m": 274622,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "KID_XS_RUN_001",
+   "measurand": "status",
+   "location": "pump",
+   "units": "",
+   "accuracyPctOfReading": 0
+  },
+  {
+   "site": "Kidaru IBPS",
+   "modelNodeId": {
+    "2058": "150291",
+    "2068": "150291"
+   },
+   "chainage_m": 274622,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "KID_IT_MTR_001",
+   "measurand": "current",
+   "location": "pump",
+   "units": "A",
+   "accuracyPctOfReading": 1
+  },
+  {
+   "site": "Kisiriri IBPS",
+   "modelNodeId": {
+    "2058": "150298",
+    "2068": "150298"
+   },
+   "chainage_m": 279902,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "KSR_PT_SUC_001",
+   "measurand": "pressure",
+   "location": "suction_manifold",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Kisiriri IBPS",
+   "modelNodeId": {
+    "2058": "150298",
+    "2068": "150298"
+   },
+   "chainage_m": 279902,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "KSR_PT_DEL_001",
+   "measurand": "pressure",
+   "location": "delivery_manifold",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Kisiriri IBPS",
+   "modelNodeId": {
+    "2058": "150298",
+    "2068": "150298"
+   },
+   "chainage_m": 279902,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "KSR_FT_DEL_001",
+   "measurand": "flow",
+   "location": "delivery_manifold",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Kisiriri IBPS",
+   "modelNodeId": {
+    "2058": "150298",
+    "2068": "150298"
+   },
+   "chainage_m": 279902,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "KSR_XS_RUN_001",
+   "measurand": "status",
+   "location": "pump",
+   "units": "",
+   "accuracyPctOfReading": 0
+  },
+  {
+   "site": "Kisiriri IBPS",
+   "modelNodeId": {
+    "2058": "150298",
+    "2068": "150298"
+   },
+   "chainage_m": 279902,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "KSR_IT_MTR_001",
+   "measurand": "current",
+   "location": "pump",
+   "units": "A",
+   "accuracyPctOfReading": 1
+  },
+  {
+   "site": "Kisana Balancing Reservoir",
+   "modelNodeId": {
+    "2058": "146453",
+    "2068": "146453"
+   },
+   "chainage_m": 293353,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "KSN_LT_TNK_001",
+   "measurand": "level",
+   "location": "tank",
+   "units": "m",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Kisana Balancing Reservoir",
+   "modelNodeId": {
+    "2058": "146453",
+    "2068": "146453"
+   },
+   "chainage_m": 293353,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "KSN_FT_INL_001",
+   "measurand": "flow",
+   "location": "inlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Kisana Balancing Reservoir",
+   "modelNodeId": {
+    "2058": "146453",
+    "2068": "146453"
+   },
+   "chainage_m": 293353,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "KSN_FT_OUT_001",
+   "measurand": "flow",
+   "location": "outlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Kisana Balancing Reservoir",
+   "modelNodeId": {
+    "2058": "146453",
+    "2068": "146453"
+   },
+   "chainage_m": 293353,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "KSN_PT_INL_001",
+   "measurand": "pressure",
+   "location": "inlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Kisana Balancing Reservoir",
+   "modelNodeId": {
+    "2058": "146453",
+    "2068": "146453"
+   },
+   "chainage_m": 293353,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "KSN_PT_OUT_001",
+   "measurand": "pressure",
+   "location": "outlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Singida Branch PS",
+   "modelNodeId": {
+    "2058": "147118",
+    "2068": "147118"
+   },
+   "chainage_m": 376398,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "SGB_PT_SUC_001",
+   "measurand": "pressure",
+   "location": "suction_manifold",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Singida Branch PS",
+   "modelNodeId": {
+    "2058": "147118",
+    "2068": "147118"
+   },
+   "chainage_m": 376398,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "SGB_PT_DEL_001",
+   "measurand": "pressure",
+   "location": "delivery_manifold",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Singida Branch PS",
+   "modelNodeId": {
+    "2058": "147118",
+    "2068": "147118"
+   },
+   "chainage_m": 376398,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "SGB_FT_DEL_001",
+   "measurand": "flow",
+   "location": "delivery_manifold",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Singida Branch PS",
+   "modelNodeId": {
+    "2058": "147118",
+    "2068": "147118"
+   },
+   "chainage_m": 376398,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "SGB_XS_RUN_001",
+   "measurand": "status",
+   "location": "pump",
+   "units": "",
+   "accuracyPctOfReading": 0
+  },
+  {
+   "site": "Singida Branch PS",
+   "modelNodeId": {
+    "2058": "147118",
+    "2068": "147118"
+   },
+   "chainage_m": 376398,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "SGB_IT_MTR_001",
+   "measurand": "current",
+   "location": "pump",
+   "units": "A",
+   "accuracyPctOfReading": 1
+  },
+  {
+   "site": "Singida PR",
+   "modelNodeId": {
+    "2058": "146454",
+    "2068": "146454"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "SGP_LT_TNK_001",
+   "measurand": "level",
+   "location": "tank",
+   "units": "m",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Singida PR",
+   "modelNodeId": {
+    "2058": "146454",
+    "2068": "146454"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "SGP_FT_INL_001",
+   "measurand": "flow",
+   "location": "inlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Singida PR",
+   "modelNodeId": {
+    "2058": "146454",
+    "2068": "146454"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "SGP_FT_OUT_001",
+   "measurand": "flow",
+   "location": "outlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Singida PR",
+   "modelNodeId": {
+    "2058": "146454",
+    "2068": "146454"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "SGP_PT_INL_001",
+   "measurand": "pressure",
+   "location": "inlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Singida PR",
+   "modelNodeId": {
+    "2058": "146454",
+    "2068": "146454"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "SGP_PT_OUT_001",
+   "measurand": "pressure",
+   "location": "outlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Kondoa PR (branch)",
+   "modelNodeId": {
+    "2058": "146460",
+    "2068": "146460"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "KND_LT_TNK_001",
+   "measurand": "level",
+   "location": "tank",
+   "units": "m",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Kondoa PR (branch)",
+   "modelNodeId": {
+    "2058": "146460",
+    "2068": "146460"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "KND_FT_INL_001",
+   "measurand": "flow",
+   "location": "inlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Kondoa PR (branch)",
+   "modelNodeId": {
+    "2058": "146460",
+    "2068": "146460"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "KND_FT_OUT_001",
+   "measurand": "flow",
+   "location": "outlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Kondoa PR (branch)",
+   "modelNodeId": {
+    "2058": "146460",
+    "2068": "146460"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "KND_PT_INL_001",
+   "measurand": "pressure",
+   "location": "inlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Kondoa PR (branch)",
+   "modelNodeId": {
+    "2058": "146460",
+    "2068": "146460"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "KND_PT_OUT_001",
+   "measurand": "pressure",
+   "location": "outlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Isalanda PR",
+   "modelNodeId": {
+    "2058": "150652",
+    "2068": "150652"
+   },
+   "chainage_m": 395053,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "ISA_LT_TNK_001",
+   "measurand": "level",
+   "location": "tank",
+   "units": "m",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Isalanda PR",
+   "modelNodeId": {
+    "2058": "150652",
+    "2068": "150652"
+   },
+   "chainage_m": 395053,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "ISA_FT_INL_001",
+   "measurand": "flow",
+   "location": "inlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Isalanda PR",
+   "modelNodeId": {
+    "2058": "150652",
+    "2068": "150652"
+   },
+   "chainage_m": 395053,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "ISA_FT_OUT_001",
+   "measurand": "flow",
+   "location": "outlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Isalanda PR",
+   "modelNodeId": {
+    "2058": "150652",
+    "2068": "150652"
+   },
+   "chainage_m": 395053,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "ISA_PT_INL_001",
+   "measurand": "pressure",
+   "location": "inlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Isalanda PR",
+   "modelNodeId": {
+    "2058": "150652",
+    "2068": "150652"
+   },
+   "chainage_m": 395053,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "ISA_PT_OUT_001",
+   "measurand": "pressure",
+   "location": "outlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Chemba PR (branch)",
+   "modelNodeId": {
+    "2058": "146458",
+    "2068": "146458"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "CHB_LT_TNK_001",
+   "measurand": "level",
+   "location": "tank",
+   "units": "m",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Chemba PR (branch)",
+   "modelNodeId": {
+    "2058": "146458",
+    "2068": "146458"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "CHB_FT_INL_001",
+   "measurand": "flow",
+   "location": "inlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Chemba PR (branch)",
+   "modelNodeId": {
+    "2058": "146458",
+    "2068": "146458"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "CHB_FT_OUT_001",
+   "measurand": "flow",
+   "location": "outlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Chemba PR (branch)",
+   "modelNodeId": {
+    "2058": "146458",
+    "2068": "146458"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "CHB_PT_INL_001",
+   "measurand": "pressure",
+   "location": "inlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Chemba PR (branch)",
+   "modelNodeId": {
+    "2058": "146458",
+    "2068": "146458"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "CHB_PT_OUT_001",
+   "measurand": "pressure",
+   "location": "outlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mkwese PR",
+   "modelNodeId": {
+    "2058": "150680",
+    "2068": "150680"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "MKW_LT_TNK_001",
+   "measurand": "level",
+   "location": "tank",
+   "units": "m",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mkwese PR",
+   "modelNodeId": {
+    "2058": "150680",
+    "2068": "150680"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "MKW_FT_INL_001",
+   "measurand": "flow",
+   "location": "inlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mkwese PR",
+   "modelNodeId": {
+    "2058": "150680",
+    "2068": "150680"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "MKW_FT_OUT_001",
+   "measurand": "flow",
+   "location": "outlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mkwese PR",
+   "modelNodeId": {
+    "2058": "150680",
+    "2068": "150680"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "MKW_PT_INL_001",
+   "measurand": "pressure",
+   "location": "inlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Mkwese PR",
+   "modelNodeId": {
+    "2058": "150680",
+    "2068": "150680"
+   },
+   "chainage_m": null,
+   "transducerElev_m": null,
+   "confidence": "Low",
+   "tagId": "MKW_PT_OUT_001",
+   "measurand": "pressure",
+   "location": "outlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Bahi PR",
+   "modelNodeId": {
+    "2058": "150666",
+    "2068": "150666"
+   },
+   "chainage_m": 553746,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "BAH_LT_TNK_001",
+   "measurand": "level",
+   "location": "tank",
+   "units": "m",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Bahi PR",
+   "modelNodeId": {
+    "2058": "150666",
+    "2068": "150666"
+   },
+   "chainage_m": 553746,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "BAH_FT_INL_001",
+   "measurand": "flow",
+   "location": "inlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Bahi PR",
+   "modelNodeId": {
+    "2058": "150666",
+    "2068": "150666"
+   },
+   "chainage_m": 553746,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "BAH_FT_OUT_001",
+   "measurand": "flow",
+   "location": "outlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Bahi PR",
+   "modelNodeId": {
+    "2058": "150666",
+    "2068": "150666"
+   },
+   "chainage_m": 553746,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "BAH_PT_INL_001",
+   "measurand": "pressure",
+   "location": "inlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Bahi PR",
+   "modelNodeId": {
+    "2058": "150666",
+    "2068": "150666"
+   },
+   "chainage_m": 553746,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "BAH_PT_OUT_001",
+   "measurand": "pressure",
+   "location": "outlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Nghambala IBPS",
+   "modelNodeId": {
+    "2058": "155901",
+    "2068": "157056"
+   },
+   "chainage_m": 582077,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "NGH_PT_SUC_001",
+   "measurand": "pressure",
+   "location": "suction_manifold",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Nghambala IBPS",
+   "modelNodeId": {
+    "2058": "155901",
+    "2068": "157056"
+   },
+   "chainage_m": 582077,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "NGH_PT_DEL_001",
+   "measurand": "pressure",
+   "location": "delivery_manifold",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Nghambala IBPS",
+   "modelNodeId": {
+    "2058": "155901",
+    "2068": "157056"
+   },
+   "chainage_m": 582077,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "NGH_FT_DEL_001",
+   "measurand": "flow",
+   "location": "delivery_manifold",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Nghambala IBPS",
+   "modelNodeId": {
+    "2058": "155901",
+    "2068": "157056"
+   },
+   "chainage_m": 582077,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "NGH_XS_RUN_001",
+   "measurand": "status",
+   "location": "pump",
+   "units": "",
+   "accuracyPctOfReading": 0
+  },
+  {
+   "site": "Nghambala IBPS",
+   "modelNodeId": {
+    "2058": "155901",
+    "2068": "157056"
+   },
+   "chainage_m": 582077,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "NGH_IT_MTR_001",
+   "measurand": "current",
+   "location": "pump",
+   "units": "A",
+   "accuracyPctOfReading": 1
+  },
+  {
+   "site": "UDOM Primary/Terminal Reservoir",
+   "modelNodeId": {
+    "2058": "146461",
+    "2068": "146461"
+   },
+   "chainage_m": 620936,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "UDM_LT_TNK_001",
+   "measurand": "level",
+   "location": "tank",
+   "units": "m",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "UDOM Primary/Terminal Reservoir",
+   "modelNodeId": {
+    "2058": "146461",
+    "2068": "146461"
+   },
+   "chainage_m": 620936,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "UDM_FT_INL_001",
+   "measurand": "flow",
+   "location": "inlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "UDOM Primary/Terminal Reservoir",
+   "modelNodeId": {
+    "2058": "146461",
+    "2068": "146461"
+   },
+   "chainage_m": 620936,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "UDM_FT_OUT_001",
+   "measurand": "flow",
+   "location": "outlet",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "UDOM Primary/Terminal Reservoir",
+   "modelNodeId": {
+    "2058": "146461",
+    "2068": "146461"
+   },
+   "chainage_m": 620936,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "UDM_PT_INL_001",
+   "measurand": "pressure",
+   "location": "inlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "UDOM Primary/Terminal Reservoir",
+   "modelNodeId": {
+    "2058": "146461",
+    "2068": "146461"
+   },
+   "chainage_m": 620936,
+   "transducerElev_m": null,
+   "confidence": "Medium",
+   "tagId": "UDM_PT_OUT_001",
+   "measurand": "pressure",
+   "location": "outlet",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Ntyuka IBPS",
+   "modelNodeId": {
+    "2058": "155919",
+    "2068": "157083"
+   },
+   "chainage_m": 614536,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "NTY_PT_SUC_001",
+   "measurand": "pressure",
+   "location": "suction_manifold",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Ntyuka IBPS",
+   "modelNodeId": {
+    "2058": "155919",
+    "2068": "157083"
+   },
+   "chainage_m": 614536,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "NTY_PT_DEL_001",
+   "measurand": "pressure",
+   "location": "delivery_manifold",
+   "units": "bar",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Ntyuka IBPS",
+   "modelNodeId": {
+    "2058": "155919",
+    "2068": "157083"
+   },
+   "chainage_m": 614536,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "NTY_FT_DEL_001",
+   "measurand": "flow",
+   "location": "delivery_manifold",
+   "units": "m3/h",
+   "accuracyPctOfReading": 0.5
+  },
+  {
+   "site": "Ntyuka IBPS",
+   "modelNodeId": {
+    "2058": "155919",
+    "2068": "157083"
+   },
+   "chainage_m": 614536,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "NTY_XS_RUN_001",
+   "measurand": "status",
+   "location": "pump",
+   "units": "",
+   "accuracyPctOfReading": 0
+  },
+  {
+   "site": "Ntyuka IBPS",
+   "modelNodeId": {
+    "2058": "155919",
+    "2068": "157083"
+   },
+   "chainage_m": 614536,
+   "transducerElev_m": null,
+   "confidence": "High",
+   "tagId": "NTY_IT_MTR_001",
+   "measurand": "current",
+   "location": "pump",
+   "units": "A",
+   "accuracyPctOfReading": 1
+  }
+ ]
+}

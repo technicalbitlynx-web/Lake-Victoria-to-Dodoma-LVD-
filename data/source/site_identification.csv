@@ -1,0 +1,21 @@
+proposed_name,node_id_2068,node_id_2058,type,model_level_m,volume_m3,easting,northing,lat,lon,confidence,match_dist_m,basis
+Mbalika Intake / Raw Water (Low Lift) PS,156754,155421,Reservoir,1145.57,,480650.67,9677907.58,-2.914032,32.825889,High,0.0,538 m from surveyed intake BH; model head 1145.6 vs BH GL 1142.2
+Mbalika WTP / Treated Water High Lift PS,156758,155420,Reservoir,1172.04,,481286.39,9677454.53,-2.918132,32.831609,High,0.0,229 m from surveyed WTP BH; model head 1172.0 vs BH GL 1174.2
+Mabale B Balancing Reservoir,146495,146495,Tank,1471.5,32021.0,479607.22,9661002.64,-3.06697,32.816474,High,0.0,95 m from surveyed Mabale B BR BH; 1471.5 vs 1464.1
+Mabale B Primary Reservoir,150367,150367,Tank,1431.49,34995.0,482034.82,9658726.76,-3.087564,32.838319,High,0.0,184 m from surveyed Mabale B PR BH; 1431.5 vs 1445.0
+Shilembo PR,150353,150353,Tank,1365.38,6796.0,507059.08,9643972.61,-3.221055,33.063538,High,0.0,66 m from surveyed Shilembo PR BH; 1365.4 vs 1370.1
+Wishiteleja PR,150339,150339,Tank,1293.5,20020.0,561668.22,9632500.34,-3.324691,33.555116,Medium,0.0,next PR in DDR route sequence; position on corridor
+Sibiti IBPS,147143,147143,Reservoir,1106.0,,663256.47,9550418.89,-4.066089,34.470661,High,0.0,model head 1106.0 vs DDR 1103.11 amsl
+Kidaru IBPS,150291,150291,Reservoir,1375.0,,662222.37,9544196.62,-4.122379,34.46145,Low,0.0,route sequence; model head 1371.3 vs DDR 1307.29 - DISCREPANCY
+Kisiriri IBPS,150298,150298,Reservoir,1597.3,,660673.2,9540397.74,-4.156761,34.447559,Medium,0.0,route sequence; model head 1592.3 vs DDR 1569.91
+Kisana Balancing Reservoir,146453,146453,Tank,1777.3,322561.0,665280.64,9532427.5,-4.228765,34.489196,High,0.0,model elev 1777.3 vs DDR 1773.15 amsl
+Singida Branch PS,147118,147118,Reservoir,1608.0,,702366.67,9465682.52,-4.831567,34.824754,Medium,0.0,"head 1608 + ~200 m duty = 1808, consistent with Singida PR"
+Singida PR,146454,146454,Tank,1781.3,54494.0,707375.04,9463085.48,-4.854926,34.869963,Medium,0.0,model elev 1781.3; static lift from 147118 matches DDR 200 m duty
+Kondoa PR (branch),146460,146460,Tank,1537.3,5493.0,814772.51,9456433.0,-4.911658,35.837985,Medium,0.0,"position -4.91,35.84 coincides with Kondoa town"
+Isalanda PR - UNCONFIRMED,150652,150652,Tank,1629.36,17523.0,697545.26,9448965.31,-4.982844,34.781694,Low,0.0,route sequence only
+Chemba PR (branch) - UNCONFIRMED,146458,146458,Tank,1500.3,24014.0,822024.66,9421354.03,-5.228312,35.904732,Low,0.0,on eastern branch; position does not match Chemba town well
+Mkwese PR - UNCONFIRMED,150680,150680,Tank,1394.3,15487.0,698149.32,9376544.19,-5.637668,34.789028,Low,0.0,route sequence only
+Bahi PR,150666,150666,Tank,932.78,22504.0,756033.46,9343114.07,-5.938002,35.312619,High,0.0,"55 m from trial pit TP24 (Mkwese->Bahi, last)"
+Nghambala IBPS,157056,155901,Reservoir,1010.06470407136,,779008.33,9328744.03,-6.066965,35.520605,High,2.5,bracketed by trial pits TP9/TP10 on Bahi->Nghambala->Ntyuka legs
+UDOM Primary/Terminal Reservoir,146461,146461,Tank,1402.5,156452.0,809163.89,9310601.36,-6.229556,35.793682,Medium,0.0,terminus; model elev 1402.5 vs DDR 1469.64 - DISCREPANCY
+Ntyuka IBPS,157083,155919,Reservoir,1206.94,,803096.88,9308936.18,-6.244889,35.73898,High,0.3,"17 m from trial pit TP20 (Ntyuka->UDOM, first)"
