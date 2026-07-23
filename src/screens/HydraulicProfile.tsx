@@ -298,8 +298,12 @@ export default function HydraulicProfile() {
     const xs = P.chainage_m; let lo = 0, hi = xs.length - 1;
     while (hi - lo > 1) { const m = (lo + hi) >> 1; if (xs[m] < hover.ch) lo = m; else hi = m; }
     const i = (hover.ch - xs[lo] < xs[hi] - hover.ch) ? lo : hi;
-    return { ch: xs[i], elev: P.elev_m[i], hgl: P.head_m[i], press: P.pressure_m[i], flow: P.flow_m3h[i], dn: P.diam_mm[i], hp: P.hpFlags[i] === 1 };
-  }, [hover]);
+    // nearest site within ~14 px of the cursor
+    let site: typeof P.sites[number] | null = null;
+    let bestCh = 14 / xScale;
+    for (const s of P.sites) { const d = Math.abs(s.chainage_m - hover.ch); if (d < bestCh) { bestCh = d; site = s; } }
+    return { ch: xs[i], elev: P.elev_m[i], hgl: P.head_m[i], press: P.pressure_m[i], flow: P.flow_m3h[i], dn: P.diam_mm[i], hp: P.hpFlags[i] === 1, site };
+  }, [hover, xScale]);
 
   const exportCSV = () => {
     const [i0, i1] = idxRange;
@@ -373,7 +377,18 @@ export default function HydraulicProfile() {
         {/* hover tooltip */}
         {hover && hoverSample && (
           <div className="absolute pointer-events-none rounded-lg px-2 py-1.5 text-xs font-mono"
-            style={{ left: Math.min(hover.x + 12, size.w - 170), top: 22, background: 'rgba(8,14,28,0.95)', border: '1px solid rgba(79,142,247,0.4)', color: '#e2e8f0', minWidth: 150 }}>
+            style={{ left: Math.min(hover.x + 12, size.w - 180), top: 22, background: 'rgba(8,14,28,0.95)', border: `1px solid ${hoverSample.site ? SITE_CLASS_COLORS[classifySite(hoverSample.site.name)] : 'rgba(79,142,247,0.4)'}`, color: '#e2e8f0', minWidth: 160 }}>
+            {hoverSample.site && (
+              <div className="mb-1 pb-1" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                <div className="font-sans font-bold" style={{ color: SITE_CLASS_COLORS[classifySite(hoverSample.site.name)] }}>
+                  {shortSiteName(hoverSample.site.name)}{hoverSample.site.unconfirmed ? ' ⚠' : ''}
+                </div>
+                <div className="font-sans text-gray-500" style={{ fontSize: 10 }}>
+                  {SITE_CLASS_LABELS[classifySite(hoverSample.site.name)]}
+                  {hoverSample.site.unconfirmed ? ' · low-confidence position' : ''}
+                </div>
+              </div>
+            )}
             <div className="text-gray-500">km {(hoverSample.ch / 1000).toFixed(2)}</div>
             <div>ground <span className="text-gray-200">{hoverSample.elev.toFixed(0)} m</span></div>
             <div>model HGL <span style={{ color: '#60a5fa' }}>{hoverSample.hgl.toFixed(0)} m</span></div>
