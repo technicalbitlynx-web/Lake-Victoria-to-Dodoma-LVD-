@@ -20,6 +20,21 @@ import type { EpanetPump, EpanetValve, EpanetTank, EpanetReservoir, EpanetJuncti
 import { X, Cpu, FilterX } from 'lucide-react';
 
 const METER_COLOR = '#22d3ee';
+const MODEL_COLOR = '#e5e7eb';   // white — model / design data
+const SCADA_COLOR = '#4ade80';   // green — live SCADA telemetry
+
+/* Model / design summary for a SCADA site (from sites.json design points) */
+function siteModelLine(site: Site, phase: 'ph1' | 'ph2'): string {
+  const d = (phase === 'ph1' ? site.phase1 : site.phase2) as Record<string, number | string | number[]>;
+  const num = (k: string) => (typeof d?.[k] === 'number' ? d[k] as number : null);
+  const flow = num('flow_m3h'), head = num('head_m'), pw = num('pumps_working'), ps = num('pumps_standby');
+  const cap = num('capacity_m3'), pr = num('pr_capacity_m3');
+  const el = site.elevation_masl != null ? ` · ${site.elevation_masl} masl` : '';
+  if (flow != null) return `Design ${flow.toLocaleString()} m³/h @ ${head ?? '—'} m${pw != null ? ` · ${pw}W${ps != null ? `+${ps}S` : ''}` : ''}`;
+  if (cap != null) return `Capacity ${cap.toLocaleString()} m³${el}`;
+  if (pr != null) return `PR ${pr.toLocaleString()} m³ design${el}`;
+  return `Design node${el}`;
+}
 
 /* ── EPANET pipe network: canvas multiline layer per diameter class ── */
 interface PipeClass { id: string; label: string; color: string; weight: number; count: number; km: number; lines: [number, number][][] }
@@ -381,16 +396,21 @@ export default function OverviewMap() {
                   /* Filter active → permanent compact data label, no click needed */
                   <Tooltip permanent direction="right" offset={[10, 0]} className="lvd-perm-label" opacity={1}>
                     <div style={{ fontWeight: 700, color: CLASS_COLORS[cls] }}>{site.name}</div>
-                    <div>{line1}</div>
-                    <div>{line2}</div>
+                    <div style={{ color: SCADA_COLOR }}>● {line1}</div>
+                    <div style={{ color: SCADA_COLOR }}>● {line2}</div>
+                    <div style={{ color: MODEL_COLOR }}>○ {siteModelLine(site, phase)}</div>
                   </Tooltip>
                 ) : (
                   /* No filter → compact hover tooltip; click opens faceplate / 3D pump screen */
                   <Tooltip direction="top" offset={[0, -6]} className="lvd-perm-label" opacity={1}>
                     <div style={{ fontWeight: 700, color: CLASS_COLORS[cls] }}>{site.name}</div>
                     <div style={{ color: '#94a3b8' }}>{cls.replace(/_/g, ' ')} · km {site.chainage_km}{site.elevation_masl ? ` · ${site.elevation_masl} masl` : ''}</div>
-                    <div>{line1}</div>
-                    <div style={{ color: ALARM_COLORS[alarmState] }}>● {alarmState.toUpperCase()}{hasPump ? ' · click for 3D pump screen' : ' · click for faceplate'}</div>
+                    <div style={{ color: SCADA_COLOR, marginTop: 2 }}>SCADA (live)</div>
+                    <div style={{ color: SCADA_COLOR }}>{line1}</div>
+                    <div style={{ color: SCADA_COLOR }}>{line2}</div>
+                    <div style={{ color: MODEL_COLOR, marginTop: 2 }}>Model (design)</div>
+                    <div style={{ color: MODEL_COLOR }}>{siteModelLine(site, phase)}</div>
+                    <div style={{ color: ALARM_COLORS[alarmState], marginTop: 2 }}>● {alarmState.toUpperCase()}{hasPump ? ' · click for 3D pump screen' : ' · click for faceplate'}</div>
                   </Tooltip>
                 )}
               </CircleMarker>
@@ -742,6 +762,18 @@ export default function OverviewMap() {
           })}
           <div className="text-gray-600 px-1.5 mt-1" style={{ fontSize: 9, lineHeight: 1.4 }}>
             MBALIKA2068 model: {NETWORK_STATS.junctions.toLocaleString()} junctions · {NETWORK_STATS.pipes.toLocaleString()} pipes · {NETWORK_STATS.pipeKm.toLocaleString()} km
+          </div>
+
+          <div className="border-t mt-2 pt-2" style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
+            <div className="font-semibold text-gray-500 mb-1" style={{ fontSize: 10 }}>DATA SOURCE (in tooltips)</div>
+            <div className="flex items-center gap-2 mb-0.5">
+              <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: SCADA_COLOR }} />
+              <span className="text-gray-400" style={{ fontSize: 10 }}>SCADA — live plant (green)</span>
+            </div>
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: MODEL_COLOR }} />
+              <span className="text-gray-400" style={{ fontSize: 10 }}>Model — design point (white)</span>
+            </div>
           </div>
 
           <div className="border-t mt-2 pt-2" style={{ borderColor: 'rgba(255,255,255,0.07)' }}>

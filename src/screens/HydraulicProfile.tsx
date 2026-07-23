@@ -3,7 +3,12 @@ import { AlertTriangle, Info, Download, RotateCcw, MapPin, Layers, FlaskConical 
 import profileData from '../data/hydraulicProfile.json';
 import { INSTRUMENTS, scada, type ScadaReading } from '../lib/scadaSource';
 import { compareAll, BAND_COLORS, type ComparisonRow, type ComparisonSummary } from '../lib/modelComparison';
+import { useScada } from '../context/ScadaContext';
 import ModelPerformance from './ModelPerformance';
+
+/* Model vs SCADA data-source colours (used across the profile) */
+const MODEL_COLOR = '#e5e7eb';   // white — EPANET model
+const SCADA_COLOR = '#22c55e';   // green — live SCADA (simulated plant)
 
 /* ── profile data (parallel typed arrays) ── */
 const P = profileData as unknown as {
@@ -57,6 +62,57 @@ function shortSiteName(full: string): string {
     .replace('Primary Reservoir', 'PR');
 }
 
+/* map a profile site (named from the CSV) to a live simulator SCADA site id */
+function scadaSiteIdFor(name: string): string | null {
+  if (/Mbalika Intake/i.test(name)) return 'MBALIKA_INTAKE';
+  if (/Mbalika WTP/i.test(name)) return 'MBALIKA_WTP';
+  if (/Mabale B Balancing/i.test(name)) return 'MABALE_BR';
+  if (/Mabale B Primary/i.test(name)) return 'MABALE_PR';
+  if (/Shilembo/i.test(name)) return 'SHILEMBO_PR';
+  if (/Wishiteleja/i.test(name)) return 'WISHITELEJA_PR';
+  if (/Sibiti/i.test(name)) return 'SIBITI_IBPS1';
+  if (/Kidaru/i.test(name)) return 'KIDARU_IBPS2';
+  if (/Kisiriri/i.test(name)) return 'KISIRIRI_IBPS3';
+  if (/Kisana/i.test(name)) return 'KISANA_BR';
+  if (/Singida Branch/i.test(name)) return 'SINGIDA_PS';
+  if (/Singida PR/i.test(name)) return 'SINGIDA_PR';
+  if (/Kondoa/i.test(name)) return 'KONDOA_PR';
+  if (/Isalanda/i.test(name)) return 'ISALANDA_PR';
+  if (/Chemba/i.test(name)) return 'CHEMBA_PR';
+  if (/Mkwese/i.test(name)) return 'MKWESE_PR';
+  if (/Bahi/i.test(name)) return 'BAHI_PR';
+  if (/Nghambala/i.test(name)) return 'NGHAMBALA_IBPS';
+  if (/Ntyuka/i.test(name)) return 'NTYUKA_IBPS';
+  if (/UDOM/i.test(name)) return 'UDOM_BR';
+  return null;
+}
+
+const M_PER_BAR = 10.1972;
+
+/* SCADA-derived hydraulic grade line at a profile site, from live plant tags.
+ * Reservoirs use water level; pumped/pressurised nodes use the pressure head;
+ * datum is the model node ground elevation (survey pending — see banner). */
+function scadaHglAt(name: string, elev_m: number, tags: Record<string, import('../types').Tag>) {
+  const id = scadaSiteIdFor(name); if (!id) return null;
+  const cls = classifySite(name);
+  const t = (suffix: string) => tags[`${id}-${suffix}`]?.value;
+  if (cls === 'RESERVOIR') {
+    const lvl = t('LT-001'); if (lvl == null) return null;
+    return { hgl: elev_m + lvl, label: 'Level', value: lvl, unit: 'm' };
+  }
+  if (cls === 'INTAKE') {
+    const lvl = t('LT-001') ?? t('LT-002'); if (lvl == null) return null;
+    return { hgl: elev_m + lvl, label: 'Sump level', value: lvl, unit: 'm' };
+  }
+  if (cls === 'OFFTAKE') {
+    const p = t('PT-DN') ?? t('PT-UP'); if (p == null) return null;
+    return { hgl: elev_m + p * M_PER_BAR, label: 'Pressure', value: p, unit: 'bar' };
+  }
+  // WTP / IBPS → delivery pressure head
+  const p = t('PT-DELY') ?? t('PT-OUT'); if (p == null) return null;
+  return { hgl: elev_m + p * M_PER_BAR, label: 'Delivery pr.', value: p, unit: 'bar' };
+}
+
 export default function HydraulicProfile() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -65,10 +121,21 @@ export default function HydraulicProfile() {
   const [vExag, setVExag] = useState(1.6);
   const [hover, setHover] = useState<{ x: number; ch: number } | null>(null);
   const [drag, setDrag] = useState<{ x: number; view: [number, number] } | null>(null);
-  const [layers, setLayers] = useState({ diameter: true, pressure: true, hgl: true, measured: true, sites: true, anomalies: true });
+  const [layers, setLayers] = useState({ diameter: true, pressure: true, hgl: true, modelscada: true, measured: false, sites: true, anomalies: true });
   const [illustrative, setIllustrative] = useState(false);
   const [readings, setReadings] = useState<Map<string, ScadaReading>>(new Map());
   const [now, setNow] = useState(Date.now());
+
+  /* live plant SCADA tags → per-site SCADA HGL */
+  const { state: scadaState } = useScada();
+  const scadaBySite = useMemo(() => {
+    const m = new Map<string, { hgl: number; label: string; value: number; unit: string }>();
+    for (const s of P.sites) {
+      const r = scadaHglAt(s.name, s.elev_m, scadaState.tags);
+      if (r) m.set(s.name, r);
+    }
+    return m;
+  }, [scadaState.tags]);
 
   /* poll synthetic SCADA (5-min cadence; refresh view every 30 s) */
   useEffect(() => {
@@ -174,11 +241,35 @@ export default function HydraulicProfile() {
       g.closePath(); g.fillStyle = 'rgba(79,142,247,0.14)'; g.fill();
     }
 
-    // model HGL line
+    // model HGL line (white = Model)
     if (layers.hgl) {
       g.beginPath();
       for (let i = i0; i <= i1; i++) { const x = xPx(P.chainage_m[i]), y = yPx(P.head_m[i]); i === i0 ? g.moveTo(x, y) : g.lineTo(x, y); }
-      g.strokeStyle = '#4f8ef7'; g.lineWidth = 1.75; g.stroke();
+      g.strokeStyle = MODEL_COLOR; g.lineWidth = 1.75; g.stroke();
+    }
+
+    // ── Model (white) vs SCADA (green) HGL at each instrumented site ──
+    if (layers.modelscada) {
+      for (const s of P.sites) {
+        const x = xPx(s.chainage_m); if (x < PAD.l - 4 || x > PAD.l + plotW + 4) continue;
+        const modelHgl = P.head_m[s.deciPos];
+        const yModel = yPx(modelHgl);
+        const scada = scadaBySite.get(s.name);
+        // connector between the two data sources
+        if (scada) {
+          const yScada = yPx(scada.hgl);
+          g.strokeStyle = 'rgba(148,163,184,0.55)'; g.lineWidth = 1.2;
+          g.beginPath(); g.moveTo(x, yModel); g.lineTo(x, yScada); g.stroke();
+          // SCADA point (green)
+          g.fillStyle = SCADA_COLOR;
+          g.beginPath(); g.arc(x, yScada, 3.4, 0, Math.PI * 2); g.fill();
+          g.strokeStyle = '#0f1117'; g.lineWidth = 1; g.stroke();
+        }
+        // Model point (white) — always present
+        g.fillStyle = MODEL_COLOR;
+        g.beginPath(); g.arc(x, yModel, 3.2, 0, Math.PI * 2); g.fill();
+        g.strokeStyle = '#0f1117'; g.lineWidth = 1; g.stroke();
+      }
     }
 
     // anomaly / high-point markers
@@ -263,7 +354,7 @@ export default function HydraulicProfile() {
       const px = xPx(x); if (px > PAD.l && px < PAD.l + plotW) g.fillText(`${(x / 1000).toFixed(0)}`, px, PAD.t + plotH + 16);
     }
     g.fillText('chainage (km)', PAD.l + plotW / 2, size.h - 4);
-  }, [size, view, vExag, hover, layers, rows, idxRange, xPx, yPx, plotW, plotH, PAD.l, PAD.t, PAD.r, PAD.b, x0, x1, viewSpan]);
+  }, [size, view, vExag, hover, layers, rows, idxRange, xPx, yPx, plotW, plotH, PAD.l, PAD.t, PAD.r, PAD.b, x0, x1, viewSpan, scadaBySite]);
 
   /* ── interaction ── */
   const chAtPx = (px: number) => x0 + (px - PAD.l) / xScale;
@@ -302,8 +393,10 @@ export default function HydraulicProfile() {
     let site: typeof P.sites[number] | null = null;
     let bestCh = 14 / xScale;
     for (const s of P.sites) { const d = Math.abs(s.chainage_m - hover.ch); if (d < bestCh) { bestCh = d; site = s; } }
-    return { ch: xs[i], elev: P.elev_m[i], hgl: P.head_m[i], press: P.pressure_m[i], flow: P.flow_m3h[i], dn: P.diam_mm[i], hp: P.hpFlags[i] === 1, site };
-  }, [hover, xScale]);
+    const siteModelHgl = site ? P.head_m[site.deciPos] : null;
+    const scada = site ? scadaBySite.get(site.name) ?? null : null;
+    return { ch: xs[i], elev: P.elev_m[i], hgl: P.head_m[i], press: P.pressure_m[i], flow: P.flow_m3h[i], dn: P.diam_mm[i], hp: P.hpFlags[i] === 1, site, siteModelHgl, scada };
+  }, [hover, xScale, scadaBySite]);
 
   const exportCSV = () => {
     const [i0, i1] = idxRange;
@@ -391,7 +484,21 @@ export default function HydraulicProfile() {
             )}
             <div className="text-gray-500">km {(hoverSample.ch / 1000).toFixed(2)}</div>
             <div>ground <span className="text-gray-200">{hoverSample.elev.toFixed(0)} m</span></div>
-            <div>model HGL <span style={{ color: '#60a5fa' }}>{hoverSample.hgl.toFixed(0)} m</span></div>
+            {/* Model vs SCADA at a site */}
+            {hoverSample.site ? (
+              <>
+                <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full inline-block" style={{ background: MODEL_COLOR }} />Model HGL <span style={{ color: MODEL_COLOR }}>{(hoverSample.siteModelHgl ?? hoverSample.hgl).toFixed(0)} m</span></div>
+                {hoverSample.scada ? (
+                  <>
+                    <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full inline-block" style={{ background: SCADA_COLOR }} />SCADA HGL <span style={{ color: SCADA_COLOR }}>{hoverSample.scada.hgl.toFixed(0)} m</span></div>
+                    <div className="text-gray-500">Δ M−S <span style={{ color: Math.abs((hoverSample.siteModelHgl ?? 0) - hoverSample.scada.hgl) > 5 ? '#f59e0b' : '#94a3b8' }}>{((hoverSample.siteModelHgl ?? 0) - hoverSample.scada.hgl).toFixed(1)} m</span></div>
+                    <div className="text-gray-600" style={{ fontSize: 10 }}>SCADA {hoverSample.scada.label} {hoverSample.scada.value.toFixed(2)} {hoverSample.scada.unit}</div>
+                  </>
+                ) : <div className="text-gray-600" style={{ fontSize: 10 }}>no SCADA at this site</div>}
+              </>
+            ) : (
+              <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full inline-block" style={{ background: MODEL_COLOR }} />model HGL <span style={{ color: MODEL_COLOR }}>{hoverSample.hgl.toFixed(0)} m</span></div>
+            )}
             <div>pressure <span style={{ color: hoverSample.hp ? '#f59e0b' : '#4ade80' }}>{hoverSample.press.toFixed(0)} m</span></div>
             <div>flow <span className="text-cyan-300">{fmt(hoverSample.flow)} m³/h</span></div>
             <div>DN <span className="text-gray-300">{hoverSample.dn}</span>{hoverSample.hp && <span className="text-amber-400"> · high point</span>}</div>
@@ -403,7 +510,7 @@ export default function HydraulicProfile() {
       <div className="flex items-center gap-3 mt-2 flex-wrap text-xs">
         <div className="flex items-center gap-1.5">
           <Layers size={12} className="text-gray-500" />
-          {([['diameter', 'DN bands'], ['pressure', 'Pressure fill'], ['hgl', 'Model HGL'], ['measured', 'Measured'], ['sites', 'Sites'], ['anomalies', 'High points']] as [keyof typeof layers, string][]).map(([k, label]) => (
+          {([['diameter', 'DN bands'], ['pressure', 'Pressure fill'], ['hgl', 'Model HGL'], ['modelscada', 'Model vs SCADA'], ['measured', 'Instrument Δ'], ['sites', 'Sites'], ['anomalies', 'High points']] as [keyof typeof layers, string][]).map(([k, label]) => (
             <button key={k} onClick={() => setLayers(l => ({ ...l, [k]: !l[k] }))}
               className="px-1.5 py-0.5 rounded" style={{ background: layers[k] ? 'rgba(59,130,246,0.18)' : 'transparent', color: layers[k] ? '#93c5fd' : '#6b7280', border: `1px solid ${layers[k] ? 'rgba(96,165,250,0.4)' : '#2e3250'}` }}>{label}</button>
           ))}
@@ -424,6 +531,14 @@ export default function HydraulicProfile() {
           <AlertTriangle size={11} /> Measured-HGL markers use the model node elevation as a stand-in for the un-surveyed transducer elevation. Illustrative only — deviations are not authoritative.
         </div>
       )}
+
+      {/* Model vs SCADA legend */}
+      <div className="flex items-center gap-3 mt-2 flex-wrap text-xs">
+        <span className="text-gray-500">Data source:</span>
+        <span className="flex items-center gap-1 text-gray-300"><span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: MODEL_COLOR }} /> Model (EPANET) — white</span>
+        <span className="flex items-center gap-1 text-gray-300"><span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: SCADA_COLOR }} /> SCADA (live plant) — green</span>
+        <span className="text-gray-600" style={{ fontSize: 10 }}>connector shows the model↔SCADA HGL difference at each instrumented site</span>
+      </div>
 
       {/* infrastructure legend */}
       <div className="flex items-center gap-3 mt-2 flex-wrap text-xs">
