@@ -8,6 +8,8 @@ const SCREENS = [
   { id: 'hydraulic', label: 'Hydraulic Profile' },
   { id: 'balance', label: 'Water Balance' },
   { id: 'valves', label: 'Valve Control' },
+  { id: 'loadsharing', label: 'Load Sharing' },
+  { id: 'sync', label: 'Sync Link' },
   { id: 'alarms', label: 'Alarms & Events' },
   { id: 'trends', label: 'Trends' },
   { id: 'energy', label: 'Energy' },

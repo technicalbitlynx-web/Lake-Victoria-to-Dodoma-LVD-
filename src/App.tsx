@@ -12,6 +12,8 @@ const EnergyScreen = lazy(() => import('./screens/EnergyScreen'));
 const CybersecurityScreen = lazy(() => import('./screens/CybersecurityScreen'));
 const ValveControl = lazy(() => import('./screens/ValveControl'));
 const NetworkModel = lazy(() => import('./screens/NetworkModel'));
+const PumpLoadSharing = lazy(() => import('./screens/PumpLoadSharing'));
+const InterStationSync = lazy(() => import('./screens/InterStationSync'));
 
 function LoadingSpinner() {
   return (
@@ -31,6 +33,8 @@ function MainContent() {
       {state.activeScreen === 'balance' && <WaterBalance />}
       {state.activeScreen === 'valves' && <ValveControl />}
       {state.activeScreen === 'network' && <NetworkModel />}
+      {state.activeScreen === 'loadsharing' && <PumpLoadSharing />}
+      {state.activeScreen === 'sync' && <InterStationSync />}
       {state.activeScreen === 'alarms' && <AlarmsScreen />}
       {state.activeScreen === 'trends' && <TrendsScreen />}
       {state.activeScreen === 'energy' && <EnergyScreen />}

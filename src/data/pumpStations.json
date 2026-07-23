@@ -1,0 +1,109 @@
+{
+  "note": "Station configuration for the Load-Sharing and Sync-Link screens. Design points are 2058-horizon values from DDR Table 5.2.6.31; the horizon label is carried through to the UI. pumpCount: null means the DDR leaves the count to the contractor — the UI must render 'Pump count — contractor design' and must not invent a number.",
+  "stations": [
+    {
+      "id": "MBK_RWPH",
+      "name": "Mbalika Raw Water Pumping Station",
+      "shortName": "Mbalika RWPH",
+      "role": "low_lift",
+      "chainage_m": 0,
+      "pumpCount": 10,
+      "dutyCount": 9,
+      "standbyCount": 1,
+      "starterType": "soft_starter",
+      "staggerSeconds": 90,
+      "designPoint": { "horizon": "2058", "q_m3h": 2685, "head_m": 44, "motor_kW": 447, "npshRatio": 6.01 }
+    },
+    {
+      "id": "MBK_CWPS",
+      "name": "Mbalika Clear Water (High Lift) Pumping Station",
+      "shortName": "Mbalika CWPS",
+      "role": "high_lift",
+      "chainage_m": 1500,
+      "pumpCount": 10,
+      "dutyCount": 9,
+      "standbyCount": 1,
+      "starterType": "vfd",
+      "staggerSeconds": 90,
+      "designPoint": { "horizon": "2058", "q_m3h": 2497, "head_m": 311, "motor_kW": 2939, "npshRatio": 0.85 }
+    },
+    {
+      "id": "SIB_IBPS1",
+      "name": "Sibiti Intermediate Booster PS",
+      "shortName": "Sibiti IBPS-1",
+      "role": "booster",
+      "chainage_m": 220000,
+      "pumpCount": 8,
+      "dutyCount": 7,
+      "standbyCount": 1,
+      "starterType": "vfd",
+      "staggerSeconds": 120,
+      "designPoint": { "horizon": "2058", "q_m3h": 2066, "head_m": 274, "motor_kW": 2142, "npshRatio": 0.96 }
+    },
+    {
+      "id": "KID_IBPS2",
+      "name": "Kidaru Intermediate Booster PS",
+      "shortName": "Kidaru IBPS-2",
+      "role": "booster",
+      "chainage_m": 280000,
+      "pumpCount": 8,
+      "dutyCount": 7,
+      "standbyCount": 1,
+      "starterType": "vfd",
+      "staggerSeconds": 120,
+      "designPoint": { "horizon": "2058", "q_m3h": 2066, "head_m": 236, "motor_kW": 1845, "npshRatio": 1.12 }
+    },
+    {
+      "id": "KIS_IBPS3",
+      "name": "Kisiriri Intermediate Booster PS",
+      "shortName": "Kisiriri IBPS-3",
+      "role": "booster",
+      "chainage_m": 340000,
+      "pumpCount": 8,
+      "dutyCount": 7,
+      "standbyCount": 1,
+      "starterType": "vfd",
+      "staggerSeconds": 120,
+      "designPoint": { "horizon": "2058", "q_m3h": 2066, "head_m": 197, "motor_kW": 952, "npshRatio": 1.34 }
+    },
+    {
+      "id": "SNG_PS",
+      "name": "Singida Branch Pumping Station",
+      "shortName": "Singida Branch PS",
+      "role": "branch_booster",
+      "chainage_m": 370000,
+      "pumpCount": null,
+      "dutyCount": null,
+      "standbyCount": null,
+      "starterType": "vfd",
+      "staggerSeconds": 120,
+      "designPoint": { "horizon": "2058", "q_m3h": null, "head_m": 199, "motor_kW": null, "npshRatio": null }
+    },
+    {
+      "id": "NGH_IBPS",
+      "name": "Nghambala Intermediate Booster PS",
+      "shortName": "Nghambala IBPS",
+      "role": "booster",
+      "chainage_m": 555000,
+      "pumpCount": null,
+      "dutyCount": null,
+      "standbyCount": null,
+      "starterType": "vfd",
+      "staggerSeconds": 120,
+      "designPoint": { "horizon": "2058", "q_m3h": null, "head_m": 235, "motor_kW": null, "npshRatio": null }
+    },
+    {
+      "id": "NTY_IBPS",
+      "name": "Ntyuka Intermediate Booster PS",
+      "shortName": "Ntyuka IBPS",
+      "role": "booster",
+      "chainage_m": 578000,
+      "pumpCount": null,
+      "dutyCount": null,
+      "standbyCount": null,
+      "starterType": "vfd",
+      "staggerSeconds": 120,
+      "designPoint": { "horizon": "2058", "q_m3h": null, "head_m": 215, "motor_kW": null, "npshRatio": null }
+    }
+  ]
+}
