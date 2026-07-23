@@ -34,6 +34,29 @@ function diamColor(dn: number): string {
 
 const fmt = (v: number, d = 0) => v.toLocaleString(undefined, { maximumFractionDigits: d, minimumFractionDigits: d });
 
+/* ── site classification → concise label + infrastructure colour ── */
+type SiteClass = 'INTAKE' | 'WTP' | 'IBPS' | 'RESERVOIR' | 'OFFTAKE';
+const SITE_CLASS_COLORS: Record<SiteClass, string> = {
+  INTAKE: '#60a5fa', WTP: '#34d399', IBPS: '#f59e0b', RESERVOIR: '#818cf8', OFFTAKE: '#f472b6',
+};
+const SITE_CLASS_LABELS: Record<SiteClass, string> = {
+  INTAKE: 'Intake', WTP: 'WTP', IBPS: 'Booster (IBPS)', RESERVOIR: 'Reservoir', OFFTAKE: 'Offtake / PR',
+};
+function classifySite(name: string): SiteClass {
+  if (/Intake/i.test(name)) return 'INTAKE';
+  if (/WTP/i.test(name)) return 'WTP';
+  if (/IBPS|Branch PS/i.test(name)) return 'IBPS';
+  if (/Balancing|Terminal|UDOM/i.test(name)) return 'RESERVOIR';
+  if (/PR|Primary/i.test(name)) return 'OFFTAKE';
+  return 'RESERVOIR';
+}
+function shortSiteName(full: string): string {
+  return full.split(' / ')[0].replace(/ - UNCONFIRMED$/, '')
+    .replace('Balancing Reservoir', 'BR')
+    .replace('Primary/Terminal Reservoir', 'Terminal Reservoir')
+    .replace('Primary Reservoir', 'PR');
+}
+
 export default function HydraulicProfile() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -182,18 +205,40 @@ export default function HydraulicProfile() {
       }
     }
 
-    // site drop-lines + markers
+    // site drop-lines + markers + fixed name labels (per infrastructure class)
     if (layers.sites) {
+      let lastLabelX = -1e9;
       for (const s of P.sites) {
         const x = xPx(s.chainage_m); if (x < PAD.l - 2 || x > PAD.l + plotW + 2) continue;
         const y = yPx(s.elev_m);
-        g.strokeStyle = s.unconfirmed ? '#f59e0b' : '#64748b';
-        g.lineWidth = 1;
+        const cls = classifySite(s.name);
+        const col = SITE_CLASS_COLORS[cls];
+        // drop-line (dashed for low-confidence positions)
+        g.strokeStyle = col; g.lineWidth = 1; g.globalAlpha = 0.55;
         if (s.unconfirmed) g.setLineDash([4, 3]);
         g.beginPath(); g.moveTo(x, PAD.t + 2); g.lineTo(x, y); g.stroke(); g.setLineDash([]);
-        g.fillStyle = s.unconfirmed ? '#f59e0b' : '#93c5fd';
-        g.beginPath(); g.arc(x, y, 3.4, 0, Math.PI * 2); g.fill();
-        g.strokeStyle = '#0f1117'; g.lineWidth = 1; g.stroke();
+        g.globalAlpha = 1;
+        // marker
+        g.fillStyle = col;
+        g.beginPath(); g.arc(x, y, 3.6, 0, Math.PI * 2); g.fill();
+        g.strokeStyle = '#0f1117'; g.lineWidth = 1.2; g.stroke();
+        // fixed vertical name label reading top→down along the drop-line
+        const label = shortSiteName(s.name) + (s.unconfirmed ? ' ⚠' : '');
+        g.save();
+        g.translate(x, PAD.t + 5);
+        g.rotate(Math.PI / 2);
+        g.font = 'bold 9.5px ui-sans-serif, system-ui, sans-serif';
+        g.textAlign = 'left'; g.textBaseline = 'middle';
+        const tw = g.measureText(label).width;
+        // stagger the horizontal (post-rotation vertical) offset when sites cluster
+        const clustered = x - lastLabelX < 12;
+        const off = clustered ? 13 : 0;
+        g.fillStyle = 'rgba(8,14,28,0.82)';
+        g.fillRect(off - 1, -6, tw + 4, 12);
+        g.fillStyle = col;
+        g.fillText(label, off + 1, 0);
+        g.restore();
+        lastLabelX = x;
       }
     }
 
@@ -365,16 +410,31 @@ export default function HydraulicProfile() {
         </div>
       )}
 
+      {/* infrastructure legend */}
+      <div className="flex items-center gap-3 mt-2 flex-wrap text-xs">
+        <span className="text-gray-500">Infrastructure:</span>
+        {(Object.keys(SITE_CLASS_LABELS) as SiteClass[]).map(c => (
+          <span key={c} className="flex items-center gap-1 text-gray-400">
+            <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: SITE_CLASS_COLORS[c] }} />
+            {SITE_CLASS_LABELS[c]}
+          </span>
+        ))}
+        <span className="flex items-center gap-1 text-gray-500"><span style={{ borderTop: '1px dashed #f59e0b', width: 14, display: 'inline-block' }} /> dashed = low-confidence position</span>
+      </div>
+
       {/* jump-to-site */}
       <div className="flex items-center gap-1.5 mt-2 flex-wrap text-xs">
         <MapPin size={12} className="text-gray-500" />
-        {P.sites.map(s => (
-          <button key={s.name} onClick={() => jumpTo(s.chainage_m)}
-            className="px-1.5 py-0.5 rounded" style={{ background: '#111827', color: s.unconfirmed ? '#fbbf24' : '#93c5fd', border: `1px solid ${s.unconfirmed ? 'rgba(245,158,11,0.35)' : '#1e3a5f'}` }}
-            title={`${s.name}${s.unconfirmed ? ' — low confidence position' : ''} · ${(s.chainage_m / 1000).toFixed(0)} km`}>
-            {s.name.split(/[/ ]/)[0]}{s.unconfirmed ? ' ⚠' : ''}
-          </button>
-        ))}
+        {P.sites.map(s => {
+          const col = SITE_CLASS_COLORS[classifySite(s.name)];
+          return (
+            <button key={s.name} onClick={() => jumpTo(s.chainage_m)}
+              className="px-1.5 py-0.5 rounded" style={{ background: '#111827', color: col, border: `1px solid ${col}55` }}
+              title={`${s.name}${s.unconfirmed ? ' — low confidence position' : ''} · ${(s.chainage_m / 1000).toFixed(0)} km`}>
+              {shortSiteName(s.name)}{s.unconfirmed ? ' ⚠' : ''}
+            </button>
+          );
+        })}
       </div>
 
       {/* comparison panel */}
