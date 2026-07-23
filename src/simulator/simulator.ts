@@ -139,6 +139,10 @@ export class Simulator {
         return next;
       }
       case 'pressure': {
+        // lubrication oil pressure follows the pump: ~3.4 bar running, 0 stopped
+        if (pumpKey && tid.includes('-LOP')) {
+          return running ? Math.max(lo, Math.min(hi, 3.4 + n * 0.3)) : 0;
+        }
         const base = lo + (hi - lo) * (0.4 + df * 0.35);
         return Math.max(lo, Math.min(hi, base + n * (hi - lo) * 0.04));
       }
@@ -168,11 +172,15 @@ export class Simulator {
         return Math.max(lo, Math.min(hi, base + n * (hi - lo) * 0.04));
       }
       case 'temperature': {
-        if (pumpKey && tid.includes('BTEMP') && !running) {
-          // Bearings cool to ambient when the pump is stopped
-          return Math.max(lo, Math.min(hi, 29 + n * 2));
+        // pump-mounted temperatures (bearings, cooling water) fall to ambient when stopped
+        if (pumpKey && !running && (tid.includes('BTEMP') || tid.includes('CWTEMP'))) {
+          return Math.max(lo, Math.min(hi, 26 + n * 2));
         }
-        const base = (tid.includes('BTEMP') ? 55 : 22);
+        if (tid.includes('CWTEMP')) {
+          // cooling water rises with load
+          return Math.max(lo, Math.min(hi, 29 + df * 5 + n * 2));
+        }
+        const base = (tid.includes('BTEMP') ? 58 : 22);
         return Math.max(lo, Math.min(hi, base + n * 5));
       }
       case 'vibration': {

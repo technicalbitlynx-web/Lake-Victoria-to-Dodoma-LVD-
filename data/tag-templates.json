@@ -12,7 +12,11 @@
     { "suffix": "P{n}-CURR", "measurement": "current", "description": "Pump {n} motor current", "unit": "A", "range": [0, 500], "alarm_high": 450, "signal": "4-20mA", "per_pump": true },
     { "suffix": "P{n}-KWH", "measurement": "power", "description": "Pump {n} energy (active)", "unit": "kWh", "range": [0, 99999], "signal": "modbus", "per_pump": true },
     { "suffix": "P{n}-BTEMP-DE", "measurement": "temperature", "description": "Pump {n} drive-end bearing temp", "unit": "°C", "range": [0, 120], "alarm_high": 85, "alarm_high_high": 100, "signal": "4-20mA", "per_pump": true },
-    { "suffix": "P{n}-BTEMP-NDE", "measurement": "temperature", "description": "Pump {n} non-drive-end bearing temp", "unit": "°C", "range": [0, 120], "alarm_high": 85, "alarm_high_high": 100, "signal": "4-20mA", "per_pump": true }
+    { "suffix": "P{n}-BTEMP-NDE", "measurement": "temperature", "description": "Pump {n} non-drive-end bearing temp", "unit": "°C", "range": [0, 120], "alarm_high": 85, "alarm_high_high": 100, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-VIB", "measurement": "vibration", "description": "Pump {n} vibration (mm/s)", "unit": "mm/s", "range": [0, 20], "alarm_high": 7, "alarm_high_high": 11, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-CWTEMP", "measurement": "temperature", "description": "Pump {n} cooling water temperature", "unit": "°C", "range": [0, 60], "alarm_high": 42, "alarm_high_high": 50, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-LOP", "measurement": "pressure", "description": "Pump {n} lubrication oil pressure", "unit": "bar", "range": [0, 6], "alarm_low_low": 1.0, "alarm_low": 1.5, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-RUNTIME", "measurement": "time", "description": "Pump {n} runtime hours", "unit": "h", "range": [0, 99999], "signal": "modbus", "per_pump": true }
   ],
   "WTP": [
     { "suffix": "FT-001", "measurement": "flow", "description": "Raw water inlet flow", "unit": "m³/h", "range": [0, 3500], "alarm_low": 200, "alarm_high": 3200, "signal": "modbus" },
@@ -44,6 +48,8 @@
     { "suffix": "P{n}-VIB", "measurement": "vibration", "description": "Pump {n} vibration (mm/s)", "unit": "mm/s", "range": [0, 20], "alarm_high": 7, "alarm_high_high": 11, "signal": "4-20mA", "per_pump": true },
     { "suffix": "P{n}-VFD-SPEED", "measurement": "speed", "description": "Pump {n} VFD speed", "unit": "%", "range": [0, 100], "signal": "modbus", "per_pump": true },
     { "suffix": "P{n}-VFD-FREQ", "measurement": "frequency", "description": "Pump {n} VFD frequency", "unit": "Hz", "range": [0, 60], "signal": "modbus", "per_pump": true },
+    { "suffix": "P{n}-CWTEMP", "measurement": "temperature", "description": "Pump {n} cooling water temperature", "unit": "°C", "range": [0, 60], "alarm_high": 42, "alarm_high_high": 50, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-LOP", "measurement": "pressure", "description": "Pump {n} lubrication oil pressure", "unit": "bar", "range": [0, 6], "alarm_low_low": 1.0, "alarm_low": 1.5, "signal": "4-20mA", "per_pump": true },
     { "suffix": "P{n}-RUNTIME", "measurement": "time", "description": "Pump {n} runtime hours", "unit": "h", "range": [0, 99999], "signal": "modbus", "per_pump": true }
   ],
   "RESERVOIR": [
@@ -85,6 +91,12 @@
     { "suffix": "P{n}-RUN", "measurement": "status", "description": "Pump {n} run status", "unit": "", "range": [0, 1], "signal": "digital", "per_pump": true },
     { "suffix": "P{n}-FLT", "measurement": "status", "description": "Pump {n} fault", "unit": "", "range": [0, 1], "signal": "digital", "per_pump": true },
     { "suffix": "P{n}-CURR", "measurement": "current", "description": "Pump {n} motor current", "unit": "A", "range": [0, 500], "signal": "4-20mA", "per_pump": true },
-    { "suffix": "P{n}-KW", "measurement": "power", "description": "Pump {n} active power", "unit": "kW", "range": [0, 2000], "signal": "modbus", "per_pump": true }
+    { "suffix": "P{n}-KW", "measurement": "power", "description": "Pump {n} active power", "unit": "kW", "range": [0, 2000], "signal": "modbus", "per_pump": true },
+    { "suffix": "P{n}-BTEMP-DE", "measurement": "temperature", "description": "Pump {n} drive-end bearing temp", "unit": "°C", "range": [0, 120], "alarm_high": 85, "alarm_high_high": 100, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-BTEMP-NDE", "measurement": "temperature", "description": "Pump {n} non-drive-end bearing temp", "unit": "°C", "range": [0, 120], "alarm_high": 85, "alarm_high_high": 100, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-VIB", "measurement": "vibration", "description": "Pump {n} vibration (mm/s)", "unit": "mm/s", "range": [0, 20], "alarm_high": 7, "alarm_high_high": 11, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-CWTEMP", "measurement": "temperature", "description": "Pump {n} cooling water temperature", "unit": "°C", "range": [0, 60], "alarm_high": 42, "alarm_high_high": 50, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-LOP", "measurement": "pressure", "description": "Pump {n} lubrication oil pressure", "unit": "bar", "range": [0, 6], "alarm_low_low": 1.0, "alarm_low": 1.5, "signal": "4-20mA", "per_pump": true },
+    { "suffix": "P{n}-RUNTIME", "measurement": "time", "description": "Pump {n} runtime hours", "unit": "h", "range": [0, 99999], "signal": "modbus", "per_pump": true }
   ]
 }
