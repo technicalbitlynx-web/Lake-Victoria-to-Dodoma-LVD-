@@ -9,16 +9,16 @@
     "lng": 32.82589,
     "phase": "both",
     "phase1": {
-      "flow_m3h": 2914,
+      "flow_m3h": 26700,
       "head_m": 44,
-      "pumps_working": 10,
-      "pumps_standby": 2
+      "pumps_working": 9,
+      "pumps_standby": 1
     },
     "phase2": {
-      "flow_m3h": 5200,
+      "flow_m3h": 29000,
       "head_m": 44,
-      "pumps_working": 18,
-      "pumps_standby": 3
+      "pumps_working": 9,
+      "pumps_standby": 1
     }
   },
   {
@@ -31,16 +31,16 @@
     "lng": 32.83163,
     "phase": "both",
     "phase1": {
-      "flow_m3h": 2710,
-      "head_m": 240,
-      "pumps_working": 10,
-      "pumps_standby": 2
+      "flow_m3h": 25333,
+      "head_m": 313,
+      "pumps_working": 9,
+      "pumps_standby": 1
     },
     "phase2": {
-      "flow_m3h": 4800,
-      "head_m": 240,
-      "pumps_working": 18,
-      "pumps_standby": 3
+      "flow_m3h": 27000,
+      "head_m": 322,
+      "pumps_working": 9,
+      "pumps_standby": 1
     }
   },
   {

@@ -4,6 +4,7 @@ import { useScada, useAlarms, useControl, useValves } from '../../context/ScadaC
 import { ALL_SITES } from '../../simulator/tagGenerator';
 import { PUMP_STATION_SPECS } from '../../data/pumpStationSpecs';
 import { VALVES_BY_SITE, VALVE_TYPE_COLORS } from '../../data/valveSpecs';
+import { PLANT_CAPACITY, cascadeFrom, toMLD } from '../../data/plantCapacity';
 import type { PumpStatus } from './Pump3D';
 import Pump3D, { STATUS_COLORS } from './Pump3D';
 import type { Site } from '../../types';
@@ -672,16 +673,21 @@ function PreDosingSection({ siteId }: { siteId: string }) {
   const rawPh = clampn(7.4 + dwob(s + 1, 0.4), 6.5, 8.5);
   const preCl = clampn(2.2 + dwob(s + 2, 0.6), 0, 5);
   const preLime = clampn(8 + dwob(s + 3, 3), 0, 25);
+  const cas = cascadeFrom(rawFlow);
   return (
     <div className="rounded-xl overflow-hidden" style={{ background: 'rgba(10,16,30,0.7)', border: '1px solid rgba(56,189,248,0.15)' }}>
-      <StageHeader icon={<Droplets size={14} className="text-sky-400" />} title="Pre-treatment & Pre-dosing" tint="#38bdf8" />
+      <StageHeader icon={<Droplets size={14} className="text-sky-400" />} title="Pre-treatment & Pre-dosing" tint="#38bdf8"
+        right={<span className="font-mono text-xs text-sky-300">{toMLD(rawFlow).toFixed(0)} MLD raw · {PLANT_CAPACITY.streams.duty} streams × {PLANT_CAPACITY.streams.perStreamMld} MLD</span>} />
       <MimicFlow stages={['Raw intake', 'Coarse screen', 'Pre-chlorination', 'Flash mixer']} active={3} />
       <div className="p-3 grid grid-cols-3 gap-2">
         <ParamPill label="Raw inlet flow" val={`${rawFlow.toFixed(0)} m³/h`} />
+        <ParamPill label="Raw inlet (MLD)" val={`${toMLD(rawFlow).toFixed(0)} MLD`} />
+        <ParamPill label="Usable (−7%)" val={`${toMLD(cas.delivery).toFixed(0)} MLD`} />
         <ParamPill label="Raw turbidity" val={`${rawTurb.toFixed(0)} NTU`} ok={rawTurb < 250} />
         <ParamPill label="Raw pH" val={rawPh.toFixed(2)} ok={rawPh >= 6.5 && rawPh <= 8.5} />
         <ParamPill label="Pre-chlorine" val={`${preCl.toFixed(2)} mg/L`} />
         <ParamPill label="Pre-lime (pH corr.)" val={`${preLime.toFixed(1)} mg/L`} />
+        <ParamPill label="Duty streams" val={`${PLANT_CAPACITY.streams.duty} running`} />
         <ParamPill label="Flash mixer" val="RUNNING" />
       </div>
     </div>
@@ -692,20 +698,68 @@ function CoagFlocSection({ siteId }: { siteId: string }) {
   const { state } = useScada(); const { tags } = state;
   const coag = tags[`${siteId}-DT-001`]?.value ?? 0;
   const settled = tags[`${siteId}-TT-001`]?.value ?? 0;
-  const sludge = tags[`${siteId}-LT-SLUDGE`]?.value ?? 0;
   const s = seedNum(siteId + 'cf');
   const gRapid = clampn(750 + dwob(s, 80), 300, 1000);
+  const { trains, stagesPerTrain, totalUnits } = PLANT_CAPACITY.flocculation;
   return (
     <div className="rounded-xl overflow-hidden" style={{ background: 'rgba(10,16,30,0.7)', border: '1px solid rgba(45,212,191,0.15)' }}>
-      <StageHeader icon={<Wind size={14} className="text-teal-400" />} title="Coagulation & Flocculation" tint="#2dd4bf" />
-      <MimicFlow stages={['Rapid mix (coag.)', 'Floc basin 1', 'Floc basin 2', 'Floc basin 3', 'Sedimentation']} active={2} />
+      <StageHeader icon={<Wind size={14} className="text-teal-400" />} title="Coagulation & Flocculation" tint="#2dd4bf"
+        right={<span className="font-mono text-xs text-teal-300">{trains} trains × {stagesPerTrain} stages = {totalUnits} units</span>} />
+      <MimicFlow stages={['Rapid mix (coag.)', 'Floc stage 1', 'Floc stage 2', 'Floc stage 3', 'to settlers']} active={2} />
       <div className="p-3 grid grid-cols-3 gap-2">
         <ParamPill label="Coagulant dose" val={`${coag.toFixed(0)} L/h`} />
         <ParamPill label="Rapid-mix G" val={`${gRapid.toFixed(0)} /s`} />
-        <ParamPill label="Flocculators" val="3 / 3 running" />
+        <ParamPill label="Floc trains" val={`${trains} / ${trains} running`} />
+        <ParamPill label="Settled turbidity" val={`${settled.toFixed(1)} NTU`} ok={settled < 10} />
+        <ParamPill label="Vertical flocculators" val={`${totalUnits} units`} />
+        <ParamPill label="Paddle speed (taper)" val={`${clampn(3.5 + dwob(s + 1, 0.6), 1, 6).toFixed(1)} → 1.2 rpm`} />
+      </div>
+      {/* per-train status */}
+      <div className="px-3 pb-3 grid grid-cols-6 gap-1.5">
+        {Array.from({ length: trains }, (_, i) => (
+          <div key={i} className="rounded px-1.5 py-1 text-center" style={{ background: 'rgba(5,12,24,0.85)', border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div className="text-gray-500" style={{ fontSize: 8 }}>Train {i + 1}</div>
+            <div className="font-mono" style={{ fontSize: 9, color: '#34d399' }}>{stagesPerTrain} stg</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SedimentationSection({ siteId }: { siteId: string }) {
+  const { state } = useScada(); const { tags } = state;
+  const settled = tags[`${siteId}-TT-001`]?.value ?? 0;
+  const sludge = tags[`${siteId}-LT-SLUDGE`]?.value ?? 0;
+  const s = seedNum(siteId + 'ips');
+  const ips = PLANT_CAPACITY.ips;
+  const slr = clampn(ips.surfaceLoading_mh + dwob(s, 0.8), 6, 12);
+  const perStream = PLANT_CAPACITY.streams.perStreamM3h;
+  return (
+    <div className="rounded-xl overflow-hidden" style={{ background: 'rgba(10,16,30,0.7)', border: '1px solid rgba(56,189,248,0.15)' }}>
+      <StageHeader icon={<Filter size={14} className="text-sky-400" />} title="Sedimentation — Inclined Plate Settlers (IPS)" tint="#38bdf8"
+        right={<span className="font-mono text-xs text-sky-300">{ips.duty} duty + {ips.standby} standby ({ips.redundancy})</span>} />
+      <div className="p-3 grid grid-cols-4 gap-2">
+        <ParamPill label="IPS units" val={`${ips.total} total`} />
+        <ParamPill label="Duty / standby" val={`${ips.duty} / ${ips.standby}`} />
+        <ParamPill label="Surface loading" val={`${slr.toFixed(1)} m/h`} ok={slr <= 12} />
+        <ParamPill label="Unit size" val={ips.dims} />
+        <ParamPill label="Per-stream flow" val={`${perStream.toLocaleString()} m³/h`} />
         <ParamPill label="Settled turbidity" val={`${settled.toFixed(1)} NTU`} ok={settled < 10} />
         <ParamPill label="Sludge blanket" val={`${sludge.toFixed(2)} m`} ok={sludge < 3.5} />
-        <ParamPill label="Paddle speed" val={`${clampn(2.5 + dwob(s + 1, 0.6), 1, 5).toFixed(1)} rpm`} />
+        <ParamPill label="Sludge withdrawal" val="AUTO" />
+      </div>
+      {/* per-settler status grid (12) */}
+      <div className="px-3 pb-3 grid grid-cols-6 gap-1.5">
+        {Array.from({ length: ips.total }, (_, i) => {
+          const standby = i >= ips.duty;
+          return (
+            <div key={i} className="rounded px-1 py-1 text-center" style={{ background: 'rgba(5,12,24,0.85)', border: `1px solid ${standby ? 'rgba(245,158,11,0.35)' : 'rgba(52,211,153,0.25)'}` }}>
+              <div className="text-gray-500" style={{ fontSize: 8 }}>IPS {i + 1}</div>
+              <div className="font-mono font-semibold" style={{ fontSize: 8.5, color: standby ? '#f59e0b' : '#34d399' }}>{standby ? 'STBY' : 'DUTY'}</div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -869,8 +923,9 @@ export default function PumpStationModal({ siteId, onClose }: Props) {
   const WTP_TABS: [string, string][] = [
     ['predosing', 'Pre-dosing'],
     ['coagfloc', 'Coag & Floc'],
-    ['dosing', 'Chemical Dosing'],
+    ['sedimentation', 'Sedimentation'],
     ['filtration', 'Filtration'],
+    ['dosing', 'Chemical Dosing'],
     ['cwt', 'Clear Water Tank'],
     ['cwps', 'Clear Water PS'],
     ['mabale', 'Mabale Reservoir'],
@@ -957,7 +1012,7 @@ export default function PumpStationModal({ siteId, onClose }: Props) {
           <div className="grid grid-cols-6 gap-3 mt-4">
             <KpiPill label="Running" val={`${runningCount} / ${phaseSpec.pumpsWorking}`} color="#22c55e" sub="duty pumps" />
             <KpiPill label="Faults" val={faultCount.toString()} color={faultCount > 0 ? '#ef4444' : '#22c55e'} sub="active" />
-            <KpiPill label="Total Flow" val={flowTag ? `${(flowTag.value * 1.5).toFixed(0)} m³/h` : `${phaseSpec.totalFlow_m3h}`} color="#60a5fa" sub="m³/h duty" />
+            <KpiPill label="Total Flow" val={flowTag ? `${flowTag.value.toFixed(0)} m³/h` : `${phaseSpec.totalFlow_m3h}`} color="#60a5fa" sub={isWTP ? `${toMLD(flowTag?.value ?? phaseSpec.totalFlow_m3h).toFixed(0)} MLD raw` : 'm³/h duty'} />
             <KpiPill label="Duty Head" val={`${phaseSpec.dutyHead_m} m`} color="#a78bfa" sub="TDH design" />
             <KpiPill label="Station Power" val={`${(totalKw / 1000).toFixed(1)} MW`} color="#fde68a" sub="total active" />
             <KpiPill label="Phase" val={phase === 'ph1' ? '1 · 2048' : '2 · 2068'} color={phase === 'ph1' ? '#60a5fa' : '#c084fc'} sub={`${phaseSpec.pumpsWorking}W + ${phaseSpec.pumpsStandby}S`} />
@@ -984,8 +1039,9 @@ export default function PumpStationModal({ siteId, onClose }: Props) {
                   </div>
                   {activeTab === 'predosing' && <PreDosingSection siteId={siteId} />}
                   {activeTab === 'coagfloc' && <CoagFlocSection siteId={siteId} />}
-                  {activeTab === 'dosing' && <ChemicalDosingSection siteId={siteId} />}
+                  {activeTab === 'sedimentation' && <SedimentationSection siteId={siteId} />}
                   {activeTab === 'filtration' && <FiltrationSection siteId={siteId} />}
+                  {activeTab === 'dosing' && <ChemicalDosingSection siteId={siteId} />}
                   {activeTab === 'cwt' && <ClearWaterTankSection siteId={siteId} />}
                   {activeTab === 'cwps' && pumpGrid}
                   {activeTab === 'mabale' && <MabaleReservoirSection />}
@@ -1003,7 +1059,7 @@ export default function PumpStationModal({ siteId, onClose }: Props) {
                 <PanelCard title="Process Values" icon={<Droplets size={13} className="text-blue-400" />}>
                   <ProcessRow label="Suction Pressure" val={suctionTag ? `${suctionTag.value.toFixed(2)} bar` : '—'} alarm={suctionTag?.alarm_state !== 'normal'} />
                   <ProcessRow label="Delivery Pressure" val={delivTag ? `${delivTag.value.toFixed(2)} bar` : '—'} alarm={delivTag?.alarm_state !== 'normal'} />
-                  <ProcessRow label="Flow (inst.)" val={flowTag ? `${(flowTag.value * 1.5).toFixed(0)} m³/h` : '—'} />
+                  <ProcessRow label="Flow (inst.)" val={flowTag ? `${flowTag.value.toFixed(0)} m³/h` : '—'} />
                   <ProcessRow label="Duty Flow/pump" val={`${dutyFlowPerPump.toFixed(0)} m³/h`} sub="design" />
                 </PanelCard>
 
@@ -1019,7 +1075,7 @@ export default function PumpStationModal({ siteId, onClose }: Props) {
 
                 <PanelCard title="Station Energy" icon={<Zap size={13} className="text-yellow-400" />}>
                   <ProcessRow label="Total Active kW" val={`${totalKw.toFixed(0)} kW`} />
-                  <ProcessRow label="Intensity" val={flowTag && flowTag.value > 0 ? `${(totalKw / (flowTag.value * 1.5) * 1000).toFixed(2)} Wh/m³` : '—'} />
+                  <ProcessRow label="Intensity" val={flowTag && flowTag.value > 0 ? `${(totalKw / flowTag.value * 1000).toFixed(2)} Wh/m³` : '—'} />
                   <ProcessRow label="Rated kW (Ph1)" val={`${(phaseSpec.motorKw * phaseSpec.pumpsWorking / 1000).toFixed(1)} MW`} />
                 </PanelCard>
 

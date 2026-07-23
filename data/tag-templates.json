@@ -19,7 +19,7 @@
     { "suffix": "P{n}-RUNTIME", "measurement": "time", "description": "Pump {n} runtime hours", "unit": "h", "range": [0, 99999], "signal": "modbus", "per_pump": true }
   ],
   "WTP": [
-    { "suffix": "FT-001", "measurement": "flow", "description": "Raw water inlet flow", "unit": "m³/h", "range": [0, 3500], "alarm_low": 200, "alarm_high": 3200, "signal": "modbus" },
+    { "suffix": "FT-001", "measurement": "flow", "description": "Raw water inlet flow (640 MLD design)", "unit": "m³/h", "range": [25600, 26700], "alarm_low": 24000, "alarm_high": 26600, "alarm_high_high": 26700, "signal": "modbus" },
     { "suffix": "DT-001", "measurement": "flow", "description": "Coagulant dosing rate", "unit": "L/h", "range": [0, 500], "signal": "4-20mA" },
     { "suffix": "TT-001", "measurement": "turbidity", "description": "Settled water turbidity", "unit": "NTU", "range": [0, 50], "alarm_high": 10, "alarm_high_high": 20, "signal": "4-20mA" },
     { "suffix": "LT-SLUDGE", "measurement": "level", "description": "Sludge blanket level", "unit": "m", "range": [0, 5], "alarm_high": 3.5, "alarm_high_high": 4.5, "signal": "4-20mA" },

@@ -106,7 +106,7 @@ export default function Header() {
         {/* System KPIs */}
         <div className="flex items-center gap-4 text-xs">
           <KpiChip label="Intake Lvl" value={`${intakeLevel.toFixed(2)} m`} icon={<Droplets size={11} />} color="blue" />
-          <KpiChip label="Raw Inflow" value={`${rawInflow.toFixed(0)} m³/h`} icon={<Activity size={11} />} color="green" />
+          <KpiChip label="Raw Inflow" value={`${(rawInflow * 24 / 1000).toFixed(0)} MLD`} icon={<Activity size={11} />} color="green" />
           <KpiChip label="UDOM Level" value={`${udomLevel.toFixed(1)} m`} icon={<Droplets size={11} />} color="cyan" />
           <KpiChip label="Energy" value="18.4 kWh/m³" icon={<Zap size={11} />} color="yellow" />
           {unackedAlarms.length > 0 && (
