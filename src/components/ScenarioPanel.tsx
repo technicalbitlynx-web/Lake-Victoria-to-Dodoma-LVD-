@@ -5,7 +5,7 @@ import { Zap, Droplets, WifiOff, AlertTriangle, X, ChevronDown } from 'lucide-re
 const SCENARIOS = [
   { id: 'pump_trip', label: 'Pump Trip', icon: <Zap size={13} />, color: '#ef4444', desc: 'P1 trips at lead IBPS — standby auto-starts' },
   { id: 'burst', label: 'Pipe Burst', icon: <Droplets size={13} />, color: '#f59e0b', desc: 'Sudden pressure drop on gravity main' },
-  { id: 'comms_fail', label: 'Comms Fail', icon: <WifiOff size={13} />, color: '#6b7280', desc: 'Sibiti IBPS-1 goes offline' },
+  { id: 'comms_fail', label: 'Comms Fail', icon: <WifiOff size={13} />, color: '#6b7280', desc: 'Kidaru IBPS-2 goes offline' },
   { id: 'turbidity', label: 'Turbidity Spike', icon: <AlertTriangle size={13} />, color: '#f59e0b', desc: 'Raw water NTU excursion at intake' },
 ];
 

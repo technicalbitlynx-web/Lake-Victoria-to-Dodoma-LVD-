@@ -3,9 +3,9 @@
   "note": "Instrument register bridging model nodes to physical tags. transducerElev_m is null everywhere — it is NOT in the design documents and must be surveyed. The comparison engine returns null (not a guess) for head error until it is provided.",
   "conversionConstant_m_per_bar": 10.1972,
   "uploadCadenceMinutes": 5,
-  "generatedAt": "2026-07-22T20:09:17.295Z",
-  "instrumentCount": 100,
-  "onTrunkCount": 75
+  "generatedAt": "2026-07-24T13:59:23.061Z",
+  "instrumentCount": 95,
+  "onTrunkCount": 70
  },
  "instruments": [
   {
@@ -457,81 +457,6 @@
    "location": "outlet",
    "units": "bar",
    "accuracyPctOfReading": 0.5
-  },
-  {
-   "site": "Sibiti IBPS",
-   "modelNodeId": {
-    "2058": "147143",
-    "2068": "147143"
-   },
-   "chainage_m": 266994,
-   "transducerElev_m": null,
-   "confidence": "High",
-   "tagId": "SBT_PT_SUC_001",
-   "measurand": "pressure",
-   "location": "suction_manifold",
-   "units": "bar",
-   "accuracyPctOfReading": 0.5
-  },
-  {
-   "site": "Sibiti IBPS",
-   "modelNodeId": {
-    "2058": "147143",
-    "2068": "147143"
-   },
-   "chainage_m": 266994,
-   "transducerElev_m": null,
-   "confidence": "High",
-   "tagId": "SBT_PT_DEL_001",
-   "measurand": "pressure",
-   "location": "delivery_manifold",
-   "units": "bar",
-   "accuracyPctOfReading": 0.5
-  },
-  {
-   "site": "Sibiti IBPS",
-   "modelNodeId": {
-    "2058": "147143",
-    "2068": "147143"
-   },
-   "chainage_m": 266994,
-   "transducerElev_m": null,
-   "confidence": "High",
-   "tagId": "SBT_FT_DEL_001",
-   "measurand": "flow",
-   "location": "delivery_manifold",
-   "units": "m3/h",
-   "accuracyPctOfReading": 0.5
-  },
-  {
-   "site": "Sibiti IBPS",
-   "modelNodeId": {
-    "2058": "147143",
-    "2068": "147143"
-   },
-   "chainage_m": 266994,
-   "transducerElev_m": null,
-   "confidence": "High",
-   "tagId": "SBT_XS_RUN_001",
-   "measurand": "status",
-   "location": "pump",
-   "units": "",
-   "accuracyPctOfReading": 0
-  },
-  {
-   "site": "Sibiti IBPS",
-   "modelNodeId": {
-    "2058": "147143",
-    "2068": "147143"
-   },
-   "chainage_m": 266994,
-   "transducerElev_m": null,
-   "confidence": "High",
-   "tagId": "SBT_IT_MTR_001",
-   "measurand": "current",
-   "location": "pump",
-   "units": "A",
-   "accuracyPctOfReading": 1
   },
   {
    "site": "Kidaru IBPS",

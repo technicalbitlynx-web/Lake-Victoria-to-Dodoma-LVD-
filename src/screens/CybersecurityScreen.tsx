@@ -343,7 +343,7 @@ export default function CybersecurityScreen() {
           <InfraCard name="FLD-RING-1" kind="SWITCH" location="Mbalika → Mabale fibre ring" status="ONLINE"
             uptime_d={205} cpu={clamp(9 + wob(57, 3), 1, 95)} temp={clamp(43 + wob(58, 3), 25, 75)}
             portsUp={8} portsTotal={8} thru={clamp(85 + wob(59, 20), 10, 400)} loss={Math.abs(wob(60, 0.08))} />
-          <InfraCard name="FLD-RING-2" kind="SWITCH" location="Sibiti → Kisiriri fibre ring" status={fieldDegraded ? 'DEGRADED' : 'ONLINE'}
+          <InfraCard name="FLD-RING-2" kind="SWITCH" location="Kidaru → Kisiriri fibre ring" status={fieldDegraded ? 'DEGRADED' : 'ONLINE'}
             uptime_d={205} cpu={clamp(10 + wob(61, 3), 1, 95)} temp={clamp(45 + wob(62, 3), 25, 75)}
             portsUp={fieldDegraded ? 6 : 8} portsTotal={8} thru={clamp(80 + wob(63, 18), 5, 400)} loss={fieldDegraded ? 4.2 : Math.abs(wob(64, 0.1))} />
           <InfraCard name="FLD-RING-3" kind="SWITCH" location="Kisana → Kwamtoro fibre ring" status="ONLINE"

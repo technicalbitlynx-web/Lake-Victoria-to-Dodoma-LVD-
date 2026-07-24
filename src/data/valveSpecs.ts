@@ -56,7 +56,7 @@ const TRUNK: Array<{ km: number; lat: number; lng: number }> = [
   { km: 1.5, lat: -2.63, lng: 33.50 },   // Mbalika WTP
   { km: 58, lat: -2.95, lng: 33.72 },    // Mabale IBPS
   { km: 62, lat: -2.98, lng: 33.75 },    // Mabale BR
-  { km: 220, lat: -4.05, lng: 34.52 },   // Sibiti IBPS-1
+  { km: 220, lat: -4.05, lng: 34.52 },   // GM-1/RM-2 alignment vertex (km 220)
   { km: 280, lat: -4.40, lng: 34.80 },   // Kidaru IBPS-2
   { km: 340, lat: -4.75, lng: 35.10 },   // Kisiriri IBPS-3
   { km: 360, lat: -4.90, lng: 35.20 },   // Kisana BR
@@ -125,23 +125,17 @@ const RAW_VALVES: ValveSpec[] = [
   stationValve({ id: 'V-MBR-OUT', name: 'Mabale BR Outlet Isolation', type: 'ISO', siteId: 'MABALE_BR', segment: 'Mabale IBPS & Reservoir', chainage_km: 62, lat: -2.98, lng: 33.75, dn: 1400, pn: 25, actuation: 'MOTORISED', controllable: true, defaultPosition: 100, basePressure_bar: 4.2, maxFlow_m3h: 3000 }),
   stationValve({ id: 'V-MBR-SCR', name: 'Mabale BR Scour Valve', type: 'WO', siteId: 'MABALE_BR', segment: 'Mabale IBPS & Reservoir', chainage_km: 62, lat: -2.98, lng: 33.75, dn: 400, pn: 10, actuation: 'MOTORISED', controllable: true, defaultPosition: 0, basePressure_bar: 1.4, maxFlow_m3h: 600 }),
 
-  /* ── Gravity Main GM-1: Mabale → Sibiti (km 62–220) ── */
-  lineFitting({ id: 'V-GM1-ARV1', name: 'Air Valve AV-GM1-01', type: 'ARV', segment: 'Gravity Main GM-1 (Mabale → Sibiti)', chainage_km: 95, dn: 150, pn: 25, actuation: 'AUTOMATIC', controllable: false, defaultPosition: 100, basePressure_bar: 9, maxFlow_m3h: 0 }),
-  lineFitting({ id: 'V-GM1-PRV1', name: 'PRV Station GM1-A (Shilembo drop)', type: 'PRV', segment: 'Gravity Main GM-1 (Mabale → Sibiti)', chainage_km: 120, dn: 800, pn: 25, actuation: 'MOTORISED', controllable: true, defaultPosition: 65, setpoint_bar: 6, basePressure_bar: 12.5, maxFlow_m3h: 2800, notes: 'Breaks 1471 → 1365 masl gravity head; pilot-operated with SCADA setpoint' }),
-  lineFitting({ id: 'V-GM1-WO1', name: 'Washout WO-GM1-01', type: 'WO', segment: 'Gravity Main GM-1 (Mabale → Sibiti)', chainage_km: 130, dn: 600, pn: 25, actuation: 'MANUAL', controllable: false, defaultPosition: 0, basePressure_bar: 8, maxFlow_m3h: 1400 }),
-  lineFitting({ id: 'V-GM1-ARV2', name: 'Air Valve AV-GM1-02', type: 'ARV', segment: 'Gravity Main GM-1 (Mabale → Sibiti)', chainage_km: 150, dn: 150, pn: 25, actuation: 'AUTOMATIC', controllable: false, defaultPosition: 100, basePressure_bar: 7, maxFlow_m3h: 0 }),
-  lineFitting({ id: 'V-GM1-PRV2', name: 'PRV Station GM1-B (Wishiteleja)', type: 'PRV', segment: 'Gravity Main GM-1 (Mabale → Sibiti)', chainage_km: 175, dn: 800, pn: 25, actuation: 'MOTORISED', controllable: true, defaultPosition: 60, setpoint_bar: 5, basePressure_bar: 10.8, maxFlow_m3h: 2800 }),
+  /* ── Gravity Main GM-1: Mabale → Kidaru (km 62–220) ── */
+  lineFitting({ id: 'V-GM1-ARV1', name: 'Air Valve AV-GM1-01', type: 'ARV', segment: 'Gravity Main GM-1 (Mabale → Kidaru)', chainage_km: 95, dn: 150, pn: 25, actuation: 'AUTOMATIC', controllable: false, defaultPosition: 100, basePressure_bar: 9, maxFlow_m3h: 0 }),
+  lineFitting({ id: 'V-GM1-PRV1', name: 'PRV Station GM1-A (Shilembo drop)', type: 'PRV', segment: 'Gravity Main GM-1 (Mabale → Kidaru)', chainage_km: 120, dn: 800, pn: 25, actuation: 'MOTORISED', controllable: true, defaultPosition: 65, setpoint_bar: 6, basePressure_bar: 12.5, maxFlow_m3h: 2800, notes: 'Breaks 1471 → 1365 masl gravity head; pilot-operated with SCADA setpoint' }),
+  lineFitting({ id: 'V-GM1-WO1', name: 'Washout WO-GM1-01', type: 'WO', segment: 'Gravity Main GM-1 (Mabale → Kidaru)', chainage_km: 130, dn: 600, pn: 25, actuation: 'MANUAL', controllable: false, defaultPosition: 0, basePressure_bar: 8, maxFlow_m3h: 1400 }),
+  lineFitting({ id: 'V-GM1-ARV2', name: 'Air Valve AV-GM1-02', type: 'ARV', segment: 'Gravity Main GM-1 (Mabale → Kidaru)', chainage_km: 150, dn: 150, pn: 25, actuation: 'AUTOMATIC', controllable: false, defaultPosition: 100, basePressure_bar: 7, maxFlow_m3h: 0 }),
+  lineFitting({ id: 'V-GM1-PRV2', name: 'PRV Station GM1-B (Wishiteleja)', type: 'PRV', segment: 'Gravity Main GM-1 (Mabale → Kidaru)', chainage_km: 175, dn: 800, pn: 25, actuation: 'MOTORISED', controllable: true, defaultPosition: 60, setpoint_bar: 5, basePressure_bar: 10.8, maxFlow_m3h: 2800 }),
 
-  /* ── Sibiti IBPS-1 (km 220) ── */
-  stationValve({ id: 'V-SB1-SUC', name: 'Sibiti IBPS-1 Suction Isolation', type: 'ISO', siteId: 'SIBITI_IBPS1', segment: 'Sibiti IBPS-1', chainage_km: 220, lat: -4.05, lng: 34.52, dn: 1400, pn: 10, actuation: 'MOTORISED', controllable: true, defaultPosition: 100, basePressure_bar: 1.5, maxFlow_m3h: 2500 }),
-  stationValve({ id: 'V-SB1-DIS', name: 'Sibiti IBPS-1 Discharge Isolation', type: 'ISO', siteId: 'SIBITI_IBPS1', segment: 'Sibiti IBPS-1', chainage_km: 220.2, lat: -4.051, lng: 34.521, dn: 1200, pn: 40, actuation: 'MOTORISED', controllable: true, defaultPosition: 100, basePressure_bar: 27.5, maxFlow_m3h: 2500 }),
-  stationValve({ id: 'V-SB1-NRV', name: 'Sibiti IBPS-1 Discharge Check', type: 'NRV', siteId: 'SIBITI_IBPS1', segment: 'Sibiti IBPS-1', chainage_km: 220.2, lat: -4.051, lng: 34.521, dn: 1200, pn: 40, actuation: 'AUTOMATIC', controllable: false, defaultPosition: 100, basePressure_bar: 27.5, maxFlow_m3h: 2500 }),
-  stationValve({ id: 'V-SB1-PSV', name: 'Sibiti IBPS-1 Surge Relief Valve', type: 'PSV', siteId: 'SIBITI_IBPS1', segment: 'Sibiti IBPS-1', chainage_km: 220.3, lat: -4.052, lng: 34.522, dn: 500, pn: 40, actuation: 'AUTOMATIC', controllable: false, defaultPosition: 0, setpoint_bar: 30, basePressure_bar: 27.5, maxFlow_m3h: 600, onMap: true }),
-
-  /* ── Rising Main RM-2: Sibiti → Kidaru (km 220–280) ── */
-  lineFitting({ id: 'V-RM2-ARV1', name: 'Air Valve AV-RM2-01', type: 'ARV', segment: 'Rising Main RM-2 (Sibiti → Kidaru)', chainage_km: 240, dn: 200, pn: 40, actuation: 'AUTOMATIC', controllable: false, defaultPosition: 100, basePressure_bar: 20, maxFlow_m3h: 0 }),
-  lineFitting({ id: 'V-RM2-WO1', name: 'Washout WO-RM2-01', type: 'WO', segment: 'Rising Main RM-2 (Sibiti → Kidaru)', chainage_km: 255, dn: 600, pn: 40, actuation: 'MANUAL', controllable: false, defaultPosition: 0, basePressure_bar: 16, maxFlow_m3h: 1400 }),
-  lineFitting({ id: 'V-RM2-ARV2', name: 'Air Valve AV-RM2-02', type: 'ARV', segment: 'Rising Main RM-2 (Sibiti → Kidaru)', chainage_km: 265, dn: 200, pn: 40, actuation: 'AUTOMATIC', controllable: false, defaultPosition: 100, basePressure_bar: 12, maxFlow_m3h: 0 }),
+  /* ── Rising Main RM-2: → Kidaru (km 220–280) ── */
+  lineFitting({ id: 'V-RM2-ARV1', name: 'Air Valve AV-RM2-01', type: 'ARV', segment: 'Rising Main RM-2 (→ Kidaru)', chainage_km: 240, dn: 200, pn: 40, actuation: 'AUTOMATIC', controllable: false, defaultPosition: 100, basePressure_bar: 20, maxFlow_m3h: 0 }),
+  lineFitting({ id: 'V-RM2-WO1', name: 'Washout WO-RM2-01', type: 'WO', segment: 'Rising Main RM-2 (→ Kidaru)', chainage_km: 255, dn: 600, pn: 40, actuation: 'MANUAL', controllable: false, defaultPosition: 0, basePressure_bar: 16, maxFlow_m3h: 1400 }),
+  lineFitting({ id: 'V-RM2-ARV2', name: 'Air Valve AV-RM2-02', type: 'ARV', segment: 'Rising Main RM-2 (→ Kidaru)', chainage_km: 265, dn: 200, pn: 40, actuation: 'AUTOMATIC', controllable: false, defaultPosition: 100, basePressure_bar: 12, maxFlow_m3h: 0 }),
 
   /* ── Kidaru IBPS-2 (km 280) ── */
   stationValve({ id: 'V-KD2-SUC', name: 'Kidaru IBPS-2 Suction Isolation', type: 'ISO', siteId: 'KIDARU_IBPS2', segment: 'Kidaru IBPS-2', chainage_km: 280, lat: -4.40, lng: 34.80, dn: 1400, pn: 10, actuation: 'MOTORISED', controllable: true, defaultPosition: 100, basePressure_bar: 1.4, maxFlow_m3h: 2500 }),

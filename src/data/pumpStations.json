@@ -28,19 +28,6 @@
       "designPoint": { "horizon": "2058", "q_m3h": 2497, "head_m": 311, "motor_kW": 2939, "npshRatio": 0.85 }
     },
     {
-      "id": "SIB_IBPS1",
-      "name": "Sibiti Intermediate Booster PS",
-      "shortName": "Sibiti IBPS-1",
-      "role": "booster",
-      "chainage_m": 220000,
-      "pumpCount": 8,
-      "dutyCount": 7,
-      "standbyCount": 1,
-      "starterType": "vfd",
-      "staggerSeconds": 120,
-      "designPoint": { "horizon": "2058", "q_m3h": 2066, "head_m": 274, "motor_kW": 2142, "npshRatio": 0.96 }
-    },
-    {
       "id": "KID_IBPS2",
       "name": "Kidaru Intermediate Booster PS",
       "shortName": "Kidaru IBPS-2",

@@ -70,7 +70,6 @@ function scadaSiteIdFor(name: string): string | null {
   if (/Mabale B Primary/i.test(name)) return 'MABALE_PR';
   if (/Shilembo/i.test(name)) return 'SHILEMBO_PR';
   if (/Wishiteleja/i.test(name)) return 'WISHITELEJA_PR';
-  if (/Sibiti/i.test(name)) return 'SIBITI_IBPS1';
   if (/Kidaru/i.test(name)) return 'KIDARU_IBPS2';
   if (/Kisiriri/i.test(name)) return 'KISIRIRI_IBPS3';
   if (/Kisana/i.test(name)) return 'KISANA_BR';

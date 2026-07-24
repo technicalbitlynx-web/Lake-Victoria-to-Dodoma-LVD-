@@ -186,7 +186,7 @@ export class Simulator {
       case 'vibration': {
         if (pumpKey && !running) return Math.abs(n) * 0.15;
         const base = 2.5;
-        const trip = this.scenario === 'pump_trip' && tid.startsWith('SIBITI_IBPS1-P1-') ? 12 : 0;
+        const trip = this.scenario === 'pump_trip' && tid.startsWith('KIDARU_IBPS2-P1-') ? 12 : 0;
         return Math.max(lo, Math.min(hi, base + trip + Math.abs(n) * 1.5));
       }
       case 'status': {
@@ -344,7 +344,7 @@ export class Simulator {
 
     // Comms fail scenario
     if (this.scenario === 'comms_fail') {
-      const commsTargetSite = 'SIBITI_IBPS1';
+      const commsTargetSite = 'KIDARU_IBPS2';
       for (const tag of Object.values(this.tags)) {
         if (tag.site_id === commsTargetSite) {
           tag.alarm_state = 'comms';
@@ -451,13 +451,13 @@ export class Simulator {
     this.scenarioTimer = 24; // ~2 minutes
 
     if (name === 'pump_trip') {
-      // Trip Sibiti P1 and auto-start the first standby unit
-      this.pumpFault['SIBITI_IBPS1-P1'] = true;
-      this.pumpRun['SIBITI_IBPS1-P11'] = true;
+      // Trip Kidaru P1 and auto-start the first standby unit
+      this.pumpFault['KIDARU_IBPS2-P1'] = true;
+      this.pumpRun['KIDARU_IBPS2-P11'] = true;
     }
 
     const site = name === 'pump_trip' || name === 'comms_fail'
-      ? ALL_SITES.find(s => s.id === 'SIBITI_IBPS1')!
+      ? ALL_SITES.find(s => s.id === 'KIDARU_IBPS2')!
       : ALL_SITES[Math.floor(Math.random() * ALL_SITES.length)];
     const alm: Alarm = {
       id: `ALM-${++this.alarmCounter}`,
@@ -478,7 +478,7 @@ export class Simulator {
 
   private endScenario() {
     if (this.scenario === 'pump_trip') {
-      this.pumpFault['SIBITI_IBPS1-P1'] = false;
+      this.pumpFault['KIDARU_IBPS2-P1'] = false;
     }
     this.scenario = null;
   }
@@ -498,9 +498,9 @@ export class Simulator {
 }
 
 const SCENARIO_DESCRIPTIONS: Record<string, string> = {
-  pump_trip: 'SCENARIO: Pump P1 trip at Sibiti IBPS-1 — standby P11 auto-start initiated',
+  pump_trip: 'SCENARIO: Pump P1 trip at Kidaru IBPS-2 — standby P11 auto-start initiated',
   burst: 'SCENARIO: Pipe burst detected — surge relief valves lifting on affected main',
-  comms_fail: 'SCENARIO: SCADA comms failure — Sibiti IBPS-1 offline',
+  comms_fail: 'SCENARIO: SCADA comms failure — Kidaru IBPS-2 offline',
   turbidity: 'SCENARIO: Turbidity excursion — raw water NTU elevated above threshold',
 };
 

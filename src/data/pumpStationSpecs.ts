@@ -51,16 +51,6 @@ export const PUMP_STATION_SPECS: Record<string, PumpStationSpec> = {
     ph2: { totalFlow_m3h: 4800, dutyHead_m: 83, motorKw: 1200, pumpsWorking: 18, pumpsStandby: 3 },
     notes: 'VFD-controlled, master-slave synchronisation',
   },
-  SIBITI_IBPS1: {
-    siteId: 'SIBITI_IBPS1',
-    stationName: 'Sibiti Intermediate Booster Station — IBPS-1',
-    pumpType: 'VTP',
-    pumpTypeLabel: 'Vertical Turbine Pump',
-    vfdFitted: true,
-    ph1: { totalFlow_m3h: 2197, dutyHead_m: 275, motorKw: 2287, pumpsWorking: 10, pumpsStandby: 2 },
-    ph2: { totalFlow_m3h: 2534, dutyHead_m: 276, motorKw: 2647, pumpsWorking: 10, pumpsStandby: 2 },
-    notes: 'VFD with KEB kinetic energy buffering, fibre-optic peer-to-peer sync',
-  },
   KIDARU_IBPS2: {
     siteId: 'KIDARU_IBPS2',
     stationName: 'Kidaru Intermediate Booster Station — IBPS-2',

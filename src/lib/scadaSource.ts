@@ -102,7 +102,7 @@ function noise(seed: number, t: number): number { return Math.sin(seed * 12.9898
  * absent, guaranteeing four distinct faults. */
 function pickFaults(): Record<string, Quality> {
   const flowTags = INSTRUMENTS.filter(i => i.measurand === 'flow' && modelValueFor(i).value != null).map(i => i.tagId);
-  const prefer = ['SBT_FT_DEL_001', 'KSR_FT_DEL_001', 'KSN_FT_INL_001', 'MPR_FT_INL_001'];
+  const prefer = ['KID_FT_DEL_001', 'KSR_FT_DEL_001', 'KSN_FT_INL_001', 'MPR_FT_INL_001'];
   const modes: Quality[] = ['comms_fail', 'stale', 'uncertain', 'out_of_range'];
   const faults: Record<string, Quality> = {};
   const used = new Set<string>();

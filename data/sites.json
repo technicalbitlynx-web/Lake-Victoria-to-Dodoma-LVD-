@@ -130,28 +130,6 @@
     }
   },
   {
-    "id": "SIBITI_IBPS1",
-    "name": "Sibiti IBPS-1",
-    "class": "IBPS",
-    "elevation_masl": 1106,
-    "chainage_km": 220,
-    "lat": -4.06613,
-    "lng": 34.47071,
-    "phase": "both",
-    "phase1": {
-      "flow_m3h": 2197,
-      "head_m": 275,
-      "pumps_working": 10,
-      "pumps_standby": 2
-    },
-    "phase2": {
-      "flow_m3h": 3900,
-      "head_m": 275,
-      "pumps_working": 16,
-      "pumps_standby": 3
-    }
-  },
-  {
     "id": "KIDARU_IBPS2",
     "name": "Kidaru IBPS-2",
     "class": "IBPS",
