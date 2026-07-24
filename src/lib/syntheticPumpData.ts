@@ -229,6 +229,16 @@ export const SYNC_MODE_META: Record<SyncMode, { color: string; label: string; he
   UNKNOWN: { color: '#ef4444', label: 'UNKNOWN — treat as degraded', healthy: false },
 };
 
+/* Power-outage → restore event sequence (how the two IBPS stay in step) */
+export type EventPhase = 'normal' | 'outage' | 'stopped' | 'restore' | 'resync';
+export const EVENT_PHASE_META: Record<EventPhase, { label: string; short: string; color: string }> = {
+  normal: { label: 'Normal operation', short: 'NORMAL', color: '#22c55e' },
+  outage: { label: 'Power outage — coordinated coast-down', short: 'OUTAGE', color: '#f59e0b' },
+  stopped: { label: 'Stations stopped — awaiting grid', short: 'STOPPED', color: '#6b7280' },
+  restore: { label: 'Power restore — synchronised restart', short: 'RESTORE', color: '#38bdf8' },
+  resync: { label: 'Re-synchronising to duty', short: 'RE-SYNC', color: '#a78bfa' },
+};
+
 export interface SyncPairCfg {
   id: string; masterStationId: string | null; slaveStationId: string | null;
   candidateStations: string[]; resolved: boolean; unresolvedReason: string;
@@ -255,92 +265,171 @@ export interface SyncState {
     divergencePct: number; surge: { bladders: { id: string; m3: number }[]; surgeTank_m3: number; surgeTankLevelPct: number };
   };
   modeTimeline: { startFrac: number; endFrac: number; mode: SyncMode }[];
+  /* live power-outage → restore event */
+  event: {
+    phase: EventPhase; active: boolean; progress: number;
+    masterSpeedPct: number; slaveSpeedPct: number; countdownSec: number; operatorNote: string;
+  };
+  /* whole-event speed profile for the chart (frac 0..1) + live marker */
+  eventProfile: { frac: number; master: number; slave: number }[];
+  eventBoundaries: { frac: number; phase: EventPhase }[];
+  nowFrac: number;
+  rampSeconds: number;
+  /* operator-facing step-by-step sequence */
+  sequence: { key: EventPhase; title: string; masterAction: string; slaveAction: string; linkState: string; tankEffect: string; note: string }[];
   synthetic: true;
 }
+
+const SYNC_SEQUENCE: SyncState['sequence'] = [
+  {
+    key: 'normal', title: '1 · Normal operation',
+    masterAction: 'Kidaru runs at duty speed, filling the balancing tank.',
+    slaveAction: 'Kisiriri runs at the same speed, drawing from the tank.',
+    linkState: 'Fibre exchanges the speed reference every few ms — speeds identical.',
+    tankEffect: 'Inflow ≈ outflow → tank level steady in band.',
+    note: 'Peer-to-peer coupling holds both machines at one speed.',
+  },
+  {
+    key: 'outage', title: '2 · Power outage — coordinated coast-down',
+    masterAction: 'Kidaru trips; KEB regenerative braking gives a controlled 120 s ramp-down.',
+    slaveAction: 'Kisiriri trips at the same instant and ramps down on the same 120 s profile.',
+    linkState: 'Fibre (on UPS) keeps both ramps identical, in lock-step.',
+    tankEffect: 'Fill and draw fall together → level holds, no surge or column separation.',
+    note: 'If the fibre is lost, each station runs an identical ramp stored in local NVM — they still stop together.',
+  },
+  {
+    key: 'stopped', title: '3 · Stopped — awaiting grid',
+    masterAction: 'Kidaru at rest, ramp complete.',
+    slaveAction: 'Kisiriri at rest, ramp complete.',
+    linkState: 'Controllers armed; link idle.',
+    tankEffect: 'Tank sits at its held level, ready to buffer restart.',
+    note: 'Both stations wait for grid return before any restart.',
+  },
+  {
+    key: 'restore', title: '4 · Power restore — synchronised restart',
+    masterAction: 'Master (Kidaru) soft-starts first and re-accelerates.',
+    slaveAction: 'Slave (Kisiriri) follows the master fibre reference, ramping up just behind it.',
+    linkState: 'Fibre re-established; slave tracks master speed within tolerance.',
+    tankEffect: 'Staggered start avoids inrush; balanced ramp-up refills/draws the tank evenly.',
+    note: 'Master-leads / slave-follows prevents the tank overfilling or dry-running on restart.',
+  },
+  {
+    key: 'resync', title: '5 · Re-synchronised to duty',
+    masterAction: 'Kidaru at duty speed.',
+    slaveAction: 'Kisiriri locked to the shared reference at duty speed.',
+    linkState: 'PEER-TO-PEER restored, deviation within band.',
+    tankEffect: 'Level recovered to its operating band.',
+    note: 'Normal coupled operation resumes.',
+  },
+];
 
 export function getSyncState(pairId: string, nowMs = Date.now()): SyncState {
   const pair = SYNC_PAIRS.find(p => p.id === pairId)!;
   const resolved = pair.resolved && pair.masterStationId != null && pair.slaveStationId != null;
+  const DUTY_HZ = 48.5;
 
-  // labels: directional only when resolved
+  // directional labels (resolved → master/slave)
   let aLabel: string, bLabel: string;
   if (resolved) {
     aLabel = `${stationById(pair.masterStationId!)?.shortName ?? pair.masterStationId} (master)`;
     bLabel = `${stationById(pair.slaveStationId!)?.shortName ?? pair.slaveStationId} (slave)`;
   } else {
-    const a = stationById(pair.candidateStations[0]);
-    const b = stationById(pair.candidateStations[pair.candidateStations.length - 1]);
-    aLabel = `Station A — ${a?.shortName ?? pair.candidateStations[0]}`;
-    bLabel = `Station B — ${b?.shortName ?? pair.candidateStations[2]}`;
+    aLabel = `Station A — ${stationById(pair.candidateStations[0])?.shortName ?? pair.candidateStations[0]}`;
+    bLabel = `Station B — ${stationById(pair.candidateStations[pair.candidateStations.length - 1])?.shortName ?? '?'}`;
   }
 
-  // live mode drives a 10-min demonstrable cycle (event-driven, not polled)
-  const phase = Math.floor((nowMs / 1000) % 600);
-  let mode: SyncMode = 'PEER_TO_PEER';
-  if (phase >= 470 && phase < 560) mode = 'LOCAL_EMERGENCY_RAMP';    // link lost → NVM ramp
-  else if (phase >= 560 && phase < 575) mode = 'UNKNOWN';           // recovering, not yet reported
-  const modeMeta = SYNC_MODE_META[mode];
+  // ── live outage → restore event cycle (300 s), so operators see the sequence ──
+  const CYCLE = 300;
+  const t = (nowMs / 1000) % CYCLE;
+  // windows: normal 0–210 · outage 210–240 · stopped 240–258 · restore 258–288 · resync 288–300
+  let phaseKey: EventPhase, progress = 0, countdownSec = 0;
+  let masterSpeedPct = 100, slaveSpeedPct = 100;
+  if (t < 210) { phaseKey = 'normal'; countdownSec = Math.round(210 - t); }
+  else if (t < 240) { phaseKey = 'outage'; progress = (t - 210) / 30; masterSpeedPct = 100 * (1 - progress); slaveSpeedPct = 100 * (1 - Math.min(1, progress * 1.04)); countdownSec = Math.round(240 - t); }
+  else if (t < 258) { phaseKey = 'stopped'; masterSpeedPct = 0; slaveSpeedPct = 0; countdownSec = Math.round(258 - t); }
+  else if (t < 288) { phaseKey = 'restore'; progress = (t - 258) / 30; masterSpeedPct = 100 * progress; slaveSpeedPct = 100 * Math.max(0, progress - 0.06); countdownSec = Math.round(288 - t); }
+  else { phaseKey = 'resync'; masterSpeedPct = 100; slaveSpeedPct = clamp(96 + (t - 288), 90, 100); countdownSec = Math.round(300 - t); }
+  masterSpeedPct = clamp(masterSpeedPct + wob(51, 0.6, nowMs), 0, 100);
+  slaveSpeedPct = clamp(slaveSpeedPct + wob(52, 0.6, nowMs), 0, 100);
+  const active = phaseKey !== 'normal';
 
-  const linkLost = mode !== 'PEER_TO_PEER';
-  const latencyMs = mode === 'PEER_TO_PEER'
-    ? clamp(2.4 + wob(11, 0.8, nowMs), 1, 6)
-    : mode === 'LOCAL_EMERGENCY_RAMP' ? 999 : clamp(40 + wob(12, 15, nowMs), 10, 90);
+  const operatorNote = {
+    normal: 'Coupled and stable. No action required.',
+    outage: 'Both stations coasting down together on KEB braking. Do not interrupt — the ramp protects the main.',
+    stopped: 'Stations safely stopped. Await grid confirmation before restart authorisation.',
+    restore: 'Master leading, slave following. Watch the tank level and speed deviation as they re-accelerate.',
+    resync: 'Speeds locking to the shared reference. Confirm PEER-TO-PEER before returning to auto.',
+  }[phaseKey];
+
+  // link stays healthy through the coordinated event (fibre on UPS)
+  const linkHealthy = true;
   const link = {
-    latencyMs,
-    jitterMs: clamp(0.3 + wob(13, 0.2, nowMs) + (linkLost ? 4 : 0), 0, 10),
-    packetLossPct: linkLost ? clamp(35 + wob(14, 20, nowMs), 5, 100) : clamp(Math.abs(wob(15, 0.05, nowMs)), 0, 0.4),
-    sinceLastGoodSec: mode === 'LOCAL_EMERGENCY_RAMP' ? phase - 470 : 0,
-    media: mode === 'PEER_TO_PEER' ? 'fibre primary (P2P)' : 'fibre LOST — local NVM ramp',
-    healthy: mode === 'PEER_TO_PEER',
+    latencyMs: clamp(2.4 + wob(11, 0.8, nowMs), 1, 6),
+    jitterMs: clamp(0.3 + wob(13, 0.2, nowMs), 0, 2),
+    packetLossPct: clamp(Math.abs(wob(15, 0.05, nowMs)), 0, 0.4),
+    sinceLastGoodSec: 0,
+    media: 'fibre primary (P2P) · on UPS',
+    healthy: linkHealthy,
   };
+  const mode: SyncMode = 'PEER_TO_PEER';
 
-  // speed tracking (Hz). deviates during degradation.
-  const refHz = clamp(48.5 + wob(21, 1.4, nowMs), 44, 50);
-  const trackErr = linkLost ? (1.6 + wob(22, 0.8, nowMs)) : wob(22, 0.12, nowMs);
-  const actualHz = clamp(refHz - trackErr, 30, 50);
+  // live speed tracking follows the event (master reference vs slave actual)
+  const refHz = clamp(DUTY_HZ * masterSpeedPct / 100 + wob(21, 0.15, nowMs), 0, 50);
+  const actualHz = clamp(DUTY_HZ * slaveSpeedPct / 100 + wob(22, 0.1, nowMs), 0, 50);
   const N = 96;
   const refTrace: number[] = [], actualTrace: number[] = [];
   for (let i = 0; i < N; i++) {
-    const f = i / (N - 1);
-    const base = 48.4 + Math.sin(seedOf('ref') + i * 0.3) * 1.2;
+    const base = DUTY_HZ * masterSpeedPct / 100 + Math.sin(seedOf('ref') + i * 0.3) * 0.4;
     refTrace.push(Math.round(base * 100) / 100);
-    // historical degradation event ~ 70% through the window
-    const eventErr = (f > 0.68 && f < 0.74) ? 1.8 : Math.sin(i * 0.9) * 0.08;
-    actualTrace.push(Math.round((base - eventErr) * 100) / 100);
+    actualTrace.push(Math.round((base - Math.abs(Math.sin(i * 0.9)) * 0.1) * 100) / 100);
   }
 
-  // balancing tank — the consequence
+  // ── balancing tank: synced ramps keep in/out balanced → level protected ──
   const tankMin = 1.0, tankMax = 5.0;
-  const netImbalance = linkLost ? (180 + wob(31, 90, nowMs)) : wob(31, 40, nowMs);   // m³/h A_out − B_in
-  const level = clamp(3.1 + wob(32, 0.5, nowMs) + (linkLost ? 0.6 : 0), tankMin, tankMax);
-  // tank plan area ~ 1500 m² → ROC (m/h) = imbalance / area
+  // small residual imbalance from the tiny master/slave lag during a ramp
+  const lagImbalance = (masterSpeedPct - slaveSpeedPct) / 100 * 90;   // m³/h
+  const netImbalance = lagImbalance + wob(31, 15, nowMs);
+  const level = clamp(3.0 + wob(32, 0.35, nowMs), tankMin, tankMax);
   const area = 1500;
   const rocMh = netImbalance / area;
-  let projection: SyncState['tank']['projection'] = { kind: 'none', minutes: null, basis: 'imbalance ÷ plan area 1500 m²' };
+  let projection: SyncState['tank']['projection'] = { kind: 'none', minutes: null, basis: 'ramps balanced — level held by the sync loop' };
   if (Math.abs(rocMh) > 0.05) {
-    if (rocMh > 0) projection = { kind: 'overflow', minutes: Math.round((tankMax - level) / rocMh * 60), basis: 'rising at current imbalance' };
-    else projection = { kind: 'dryrun', minutes: Math.round((level - tankMin) / -rocMh * 60), basis: 'falling at current imbalance' };
+    if (rocMh > 0) projection = { kind: 'overflow', minutes: Math.round((tankMax - level) / rocMh * 60), basis: 'transient during ramp' };
+    else projection = { kind: 'dryrun', minutes: Math.round((level - tankMin) / -rocMh * 60), basis: 'transient during ramp' };
   }
 
-  // coast-down replay (120 s), station B lags → divergence
+  // ── whole-event speed profile for the chart (frac 0..1) ──
+  const eventProfile: SyncState['eventProfile'] = [];
+  const seg = (f: number): { m: number; s: number } => {
+    // 0–0.12 normal · 0.12–0.40 coast · 0.40–0.52 stopped · 0.52–0.80 restore · 0.80–1 normal
+    if (f < 0.12) return { m: 100, s: 100 };
+    if (f < 0.40) { const p = (f - 0.12) / 0.28; return { m: 100 * (1 - p), s: 100 * (1 - Math.min(1, p * 1.04)) }; }
+    if (f < 0.52) return { m: 0, s: 0 };
+    if (f < 0.80) { const p = (f - 0.52) / 0.28; return { m: 100 * p, s: 100 * Math.max(0, p - 0.06) }; }
+    return { m: 100, s: 100 };
+  };
+  for (let i = 0; i <= 80; i++) { const f = i / 80; const v = seg(f); eventProfile.push({ frac: f, master: Math.round(v.m * 10) / 10, slave: Math.round(v.s * 10) / 10 }); }
+  const eventBoundaries: SyncState['eventBoundaries'] = [
+    { frac: 0.12, phase: 'outage' }, { frac: 0.40, phase: 'stopped' }, { frac: 0.52, phase: 'restore' }, { frac: 0.80, phase: 'resync' },
+  ];
+  // map current live phase to a marker position on the chart
+  const nowFrac = phaseKey === 'normal' ? 0.06
+    : phaseKey === 'outage' ? 0.12 + progress * 0.28
+      : phaseKey === 'stopped' ? 0.40 + ((t - 240) / 18) * 0.12
+        : phaseKey === 'restore' ? 0.52 + progress * 0.28
+          : 0.90;
+
+  // coast-down detail (120 s) — kept for the surge-asset view
   const steps = 60;
   const rampA: number[] = [], rampB: number[] = [];
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps;
-    rampA.push(Math.round(100 * (1 - t) * 100) / 100);
-    const lag = 1 - Math.min(1, t * 1.12);   // B decelerates slightly faster mid-ramp
-    rampB.push(Math.round(clamp(100 * lag, 0, 100) * 100) / 100);
-  }
+  for (let i = 0; i <= steps; i++) { const p = i / steps; rampA.push(Math.round(100 * (1 - p) * 10) / 10); rampB.push(Math.round(clamp(100 * (1 - Math.min(1, p * 1.04)), 0, 100) * 10) / 10); }
   let maxDiv = 0; for (let i = 0; i <= steps; i++) maxDiv = Math.max(maxDiv, Math.abs(rampA[i] - rampB[i]));
-
   const bladders = Object.entries(pair.bladderTanks_m3).map(([id, m3]) => ({ id, m3 }));
 
-  // 24 h mode timeline (event resolution) — one degradation window in history
   const modeTimeline: SyncState['modeTimeline'] = [
-    { startFrac: 0, endFrac: 0.62, mode: 'PEER_TO_PEER' },
-    { startFrac: 0.62, endFrac: 0.66, mode: 'LOCAL_EMERGENCY_RAMP' },
-    { startFrac: 0.66, endFrac: 0.665, mode: 'UNKNOWN' },
-    { startFrac: 0.665, endFrac: 1, mode: 'PEER_TO_PEER' },
+    { startFrac: 0, endFrac: 0.7, mode: 'PEER_TO_PEER' },
+    { startFrac: 0.7, endFrac: 0.74, mode: 'LOCAL_EMERGENCY_RAMP' },
+    { startFrac: 0.74, endFrac: 1, mode: 'PEER_TO_PEER' },
   ];
 
   return {
@@ -358,6 +447,9 @@ export function getSyncState(pairId: string, nowMs = Date.now()): SyncState {
       surge: { bladders, surgeTank_m3: pair.surgeTank_m3, surgeTankLevelPct: clamp(64 + wob(41, 8, nowMs), 20, 95) },
     },
     modeTimeline,
+    event: { phase: phaseKey, active, progress, masterSpeedPct, slaveSpeedPct, countdownSec, operatorNote },
+    eventProfile, eventBoundaries, nowFrac, rampSeconds: pair.rampDownSeconds,
+    sequence: SYNC_SEQUENCE,
     synthetic: true,
   };
 }

@@ -1,17 +1,17 @@
 {
-  "note": "Inter-station peer-to-peer speed-synchronisation pairs. masterStationId / slaveStationId are null and resolved is false because the DDR contains an unsettled naming ambiguity (see unresolvedReason). The UI must render 'Assignment unresolved', show the note, and NOT draw a directional master->slave arrow. Setting the two IDs and resolved:true must be the only change needed to make the directional relationship appear.",
+  "note": "Inter-station peer-to-peer speed-synchronisation pairs. Per the LVD PROJECT TRAINING schematic (Rev.01, 2026-07-24) the synchronised pair is Kidaru IBPS-2 (master, upstream) and Kisiriri IBPS-3 (slave, downstream). Kidaru pumps into the intermediate balancing tank at Kisiriri's suction; Kisiriri draws from it. Keeping the two in step protects that tank from overflow or dry-run.",
   "pairs": [
     {
-      "id": "PAIR_UPPER",
-      "masterStationId": null,
-      "slaveStationId": null,
-      "candidateStations": ["SIB_IBPS1", "KID_IBPS2", "KIS_IBPS3"],
-      "resolved": false,
-      "unresolvedReason": "DDR names the master 'Kisiti'. The start-up sequence places Kisiti upstream of Kidaru (implying Sibiti IBPS-1); other passages read as Kisiriri IBPS-3, which is downstream. Master/slave assignment inverts depending on which is correct.",
-      "balancingTank": { "station": "KID_IBPS2", "note": "Kidaru balancing tank — the asset the sync loop protects" },
+      "id": "PAIR_KID_KIS",
+      "masterStationId": "KID_IBPS2",
+      "slaveStationId": "KIS_IBPS3",
+      "candidateStations": ["KID_IBPS2", "KIS_IBPS3"],
+      "resolved": true,
+      "unresolvedReason": "",
+      "balancingTank": { "station": "KIS_IBPS3", "note": "Kisiriri intermediate balancing tank — filled by Kidaru, drawn by Kisiriri; the asset the sync loop protects" },
       "rampDownSeconds": 120,
       "waveWindowSeconds": 47.6,
-      "bladderTanks_m3": { "KID_IBPS2": 120, "KISITI_UNRESOLVED": 240 },
+      "bladderTanks_m3": { "KID_IBPS2": 120, "KIS_IBPS3": 240 },
       "surgeTank_m3": 500,
       "linkMedia": "fibre_p2p",
       "fallbackMode": "local_emergency_ramp_nvm"
