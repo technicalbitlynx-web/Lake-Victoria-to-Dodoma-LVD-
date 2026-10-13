@@ -19,6 +19,40 @@ import { pumpSim, valveSim, tankSim, reservoirSim, junctionSim } from '../simula
 import type { EpanetPump, EpanetValve, EpanetTank, EpanetReservoir, EpanetJunction } from '../simulator/networkSim';
 import { X, Cpu, FilterX } from 'lucide-react';
 
+/* ── Basemap ──
+   CARTO stamps "API KEY REQUIRED" over keyless tiles, so the default is Esri's
+   keyless dark canvas (base + labels). Native tiles stop at z16 and are upscaled
+   past that. Put VITE_CARTO_API_KEY in .env.local to use CARTO dark_all instead. */
+const CARTO_KEY = import.meta.env.VITE_CARTO_API_KEY as string | undefined;
+const ESRI_CANVAS = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas';
+
+function Basemap() {
+  if (CARTO_KEY) {
+    return (
+      <TileLayer
+        url={`https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?api_key=${CARTO_KEY}`}
+        attribution='&copy; <a href="https://carto.com/">CARTO</a> &copy; OpenStreetMap contributors'
+        maxZoom={19}
+      />
+    );
+  }
+  return (
+    <>
+      <TileLayer
+        url={`${ESRI_CANVAS}/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}`}
+        attribution='&copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, &copy; OpenStreetMap contributors'
+        maxZoom={19}
+        maxNativeZoom={16}
+      />
+      <TileLayer
+        url={`${ESRI_CANVAS}/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}`}
+        maxZoom={19}
+        maxNativeZoom={16}
+      />
+    </>
+  );
+}
+
 const METER_COLOR = '#22d3ee';
 const MODEL_COLOR = '#e5e7eb';   // white — model / design data
 const SCADA_COLOR = '#4ade80';   // green — live SCADA telemetry
@@ -360,11 +394,7 @@ export default function OverviewMap() {
           style={{ width: '100%', height: '100%', background: '#0f1117' }}
           zoomControl={true}
         >
-          <TileLayer
-            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-            attribution='&copy; <a href="https://carto.com/">CARTO</a>'
-            maxZoom={19}
-          />
+          <Basemap />
 
           {/* MBALIKA2068 EPANET pipe network (canvas layer, 34,404 pipes) */}
           <NetworkPipes visible={pipeVis} />
