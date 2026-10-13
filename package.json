@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:pages": "tsc -b && vite build --base=/Lake-Victoria-to-Dodoma-LVD-/",
+    "build:pages": "tsc -b && vite build --mode pages",
     "lint": "oxlint",
     "preview": "vite preview"
   },
